@@ -1,0 +1,60 @@
+{
+  "name": "react-boilerplate",
+  "version": "1.0.0",
+  "description": "React Boilerplate",
+  "main": "src/index.html",
+  "scripts": {
+    "dev": "parcel src/index.html",
+    "build": "parcel build src/index.html --out-dir build --public-url ./",
+    "api": "ts-node src/api/app.ts",
+    "update:packages": "node update.js && npm update --save-dev && npm update --save"
+  },
+  "browserslist": [
+    "Chrome > 75",
+    "Firefox > 66",
+    "Safari > 10"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Wursteintopf/ReactBoilerplate.git"
+  },
+  "author": "Markus Vogel",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/Wursteintopf/ReactBoilerplate/issues"
+  },
+  "homepage": "https://github.com/Wursteintopf/ReactBoilerplate#readme",
+  "dependencies": {
+    "@emotion/core": "*",
+    "@emotion/styled": "*",
+    "@material-ui/core": "*",
+    "@material-ui/icons": "*",
+    "@types/cors": "*",
+    "@types/express": "*",
+    "@types/morgan": "*",
+    "@types/react": "*",
+    "@types/react-dom": "*",
+    "@types/react-redux": "*",
+    "@types/react-router": "*",
+    "@types/react-router-dom": "*",
+    "body-parser": "*",
+    "cors": "*",
+    "d3": "^3.5.17",
+    "express": "*",
+    "https": "*",
+    "morgan": "*",
+    "parcel-bundler": "*",
+    "react": "*",
+    "react-d3-library": "^1.1.8",
+    "react-dom": "*",
+    "react-redux": "*",
+    "react-router-dom": "*",
+    "redux": "*",
+    "redux-devtools-extension": "*",
+    "redux-saga": "*",
+    "reselect": "*",
+    "typescript": "*",
+    "typescript-fsa": "*",
+    "typescript-fsa-reducers": "*"
+  }
+}
