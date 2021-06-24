@@ -10,35 +10,42 @@ export const MainLayout = styled.div`
 
 export const PieChartZone = styled.div`
   height: 50vh;
+  width: calc(100vw/3);
   border: 1px solid black;
 `
 
 export const TableZone = styled.div`
   height: 50vh;
+  width: calc(100vw/3);
   border: 1px solid black;
 `
 
 export const StackedBarChartZone = styled.div`
   height: 50vh;
+  width: calc(100vw/3);
   border: 1px solid black;
 `
 
 export const StreamGraphZone = styled.div`
   height: 50vh;  
+  width: calc(100vw/3);
   border: 1px solid black;
 `
 
 export const StarplotZone = styled.div`
   height: calc(100vh/3);
+  width: calc(100vw/3);
   border: 1px solid black;
 `
 
 export const CircleGraphZone = styled.div`
   height: calc(100vh/3);
+  width: calc(100vw/3);
   border: 1px solid black;
 `
 
 export const GeneralInfoZone = styled.div`
   height: calc(100vh/3);
+  width: calc(100vw/3);
   border: 1px solid black;
 `
