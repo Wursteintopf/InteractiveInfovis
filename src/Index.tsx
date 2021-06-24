@@ -8,6 +8,8 @@ import { rootReducer } from '~store/root.reducer'
 import { applyMiddleware, createStore } from 'redux'
 import rootSaga from './store/root.sagas'
 import Home from '~app/screens/Home'
+import {globalStyles} from "~app/GlobalStyling";
+import { Global } from '@emotion/react';
 
 const App = () => {
   const sagaMiddleware = createSagaMiddleware()
@@ -22,6 +24,8 @@ const App = () => {
   return (
     <Provider store={store}>
       <Router>
+        <Global styles={globalStyles} />
+
         <Route exact path='/' component={Home} />
       </Router>
     </Provider>
