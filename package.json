@@ -2,7 +2,6 @@
   "name": "react-boilerplate",
   "version": "1.0.0",
   "description": "React Boilerplate",
-  "main": "src/index.html",
   "scripts": {
     "dev": "parcel src/index.html",
     "build": "parcel build src/index.html --out-dir build --public-url ./",
@@ -40,6 +39,7 @@
     "d3-axis": "^3.0.0",
     "d3-scale": "^4.0.0",
     "d3-selection": "^3.0.0",
+    "d3-shape": "^3.0.1",
     "eslint": "^7.29.0",
     "eslint-config-standard": "^14.1.1",
     "eslint-config-standard-jsx": "^8.1.0",

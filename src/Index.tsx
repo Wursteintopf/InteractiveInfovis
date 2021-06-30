@@ -4,12 +4,12 @@ import { Provider } from 'react-redux'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import createSagaMiddleware from 'redux-saga'
 import { composeWithDevTools } from 'redux-devtools-extension'
-import { rootReducer } from '~store/root.reducer'
 import { applyMiddleware, createStore } from 'redux'
 import rootSaga from './store/root.sagas'
-import Home from '~app/screens/Home'
-import {globalStyles} from "~app/GlobalStyling";
-import { Global } from '@emotion/react';
+import { Global } from '@emotion/react'
+import { rootReducer } from './store/root.reducer'
+import Home from './app/screens/Home'
+import { globalStyles } from './app/GlobalStyling'
 
 const App = () => {
   const sagaMiddleware = createSagaMiddleware()

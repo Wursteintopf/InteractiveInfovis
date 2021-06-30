@@ -1,237 +1,237 @@
 export const data = {
-  "2014": {
-    "Haushalt mit 1 Person": {
-      "Erfasste Haushalte": 2055,
-      "Hochgerechnete Haushalte": 15307,
-      "Haushaltsbruttoeinkommen": 2497,
-      "Haushaltsnettoeinkommen": 1913,
-      "Ausgabefähige Einkommen und Einnahmen": 1955,
-      "Private Konsumausgaben": 1519,
-      "Andere Ausgaben": 1025
+  2014: {
+    'Haushalt mit 1 Person': {
+      'Erfasste Haushalte': 2055,
+      'Hochgerechnete Haushalte': 15307,
+      Haushaltsbruttoeinkommen: 2497,
+      Haushaltsnettoeinkommen: 1913,
+      'Ausgabefaehige Einkommen und Einnahmen': 1955,
+      'Private Konsumausgaben': 1519,
+      'Andere Ausgaben': 1025,
     },
-    "Haushalt mit 2 Personen": {
-      "Erfasste Haushalte": 3239,
-      "Hochgerechnete Haushalte": 12841,
-      "Haushaltsbruttoeinkommen": 4559,
-      "Haushaltsnettoeinkommen": 3544,
-      "Ausgabefähige Einkommen und Einnahmen": 3605,
-      "Private Konsumausgaben": 2692,
-      "Andere Ausgaben": 1966
+    'Haushalt mit 2 Personen': {
+      'Erfasste Haushalte': 3239,
+      'Hochgerechnete Haushalte': 12841,
+      Haushaltsbruttoeinkommen: 4559,
+      Haushaltsnettoeinkommen: 3544,
+      'Ausgabefaehige Einkommen und Einnahmen': 3605,
+      'Private Konsumausgaben': 2692,
+      'Andere Ausgaben': 1966,
     },
-    "Haushalt mit 3 Personen": {
-      "Erfasste Haushalte": 1274,
-      "Hochgerechnete Haushalte": 4283,
-      "Haushaltsbruttoeinkommen": 5873,
-      "Haushaltsnettoeinkommen": 4406,
-      "Ausgabefähige Einkommen und Einnahmen": 4497,
-      "Private Konsumausgaben": 3151,
-      "Andere Ausgaben": 2109
+    'Haushalt mit 3 Personen': {
+      'Erfasste Haushalte': 1274,
+      'Hochgerechnete Haushalte': 4283,
+      Haushaltsbruttoeinkommen: 5873,
+      Haushaltsnettoeinkommen: 4406,
+      'Ausgabefaehige Einkommen und Einnahmen': 4497,
+      'Private Konsumausgaben': 3151,
+      'Andere Ausgaben': 2109,
     },
-    "Haushalt mit 4 Personen": {
-      "Erfasste Haushalte": 840,
-      "Hochgerechnete Haushalte": 3138,
-      "Haushaltsbruttoeinkommen": 6578,
-      "Haushaltsnettoeinkommen": 4981,
-      "Ausgabefähige Einkommen und Einnahmen": 5088,
-      "Private Konsumausgaben": 3647,
-      "Andere Ausgaben": 2599
+    'Haushalt mit 4 Personen': {
+      'Erfasste Haushalte': 840,
+      'Hochgerechnete Haushalte': 3138,
+      Haushaltsbruttoeinkommen: 6578,
+      Haushaltsnettoeinkommen: 4981,
+      'Ausgabefaehige Einkommen und Einnahmen': 5088,
+      'Private Konsumausgaben': 3647,
+      'Andere Ausgaben': 2599,
     },
-    "Haushalt mit 5 und mehr Personen": {
-      "Erfasste Haushalte": 238,
-      "Hochgerechnete Haushalte": 1082,
-      "Haushaltsbruttoeinkommen": 7151,
-      "Haushaltsnettoeinkommen": 5580,
-      "Ausgabefähige Einkommen und Einnahmen": 5661,
-      "Private Konsumausgaben": 3979,
-      "Andere Ausgaben": 2811
-    }
+    'Haushalt mit 5 und mehr Personen': {
+      'Erfasste Haushalte': 238,
+      'Hochgerechnete Haushalte': 1082,
+      Haushaltsbruttoeinkommen: 7151,
+      Haushaltsnettoeinkommen: 5580,
+      'Ausgabefaehige Einkommen und Einnahmen': 5661,
+      'Private Konsumausgaben': 3979,
+      'Andere Ausgaben': 2811,
+    },
   },
-  "2015": {
-    "Haushalt mit 1 Person": {
-      "Erfasste Haushalte": 0,
-      "Hochgerechnete Haushalte": 0,
-      "Haushaltsbruttoeinkommen": 0,
-      "Haushaltsnettoeinkommen": 0,
-      "Ausgabefähige Einkommen und Einnahmen": 0,
-      "Private Konsumausgaben": 0,
-      "Andere Ausgaben": 0
+  2015: {
+    'Haushalt mit 1 Person': {
+      'Erfasste Haushalte': 2087,
+      'Hochgerechnete Haushalte': 15788,
+      Haushaltsbruttoeinkommen: 2549,
+      Haushaltsnettoeinkommen: 1953,
+      'Ausgabefaehige Einkommen und Einnahmen': 1988,
+      'Private Konsumausgaben': 1531,
+      'Andere Ausgaben': 1070,
     },
-    "Haushalt mit 2 Personen": {
-      "Erfasste Haushalte": 0,
-      "Hochgerechnete Haushalte": 0,
-      "Haushaltsbruttoeinkommen": 0,
-      "Haushaltsnettoeinkommen": 0,
-      "Ausgabefähige Einkommen und Einnahmen": 0,
-      "Private Konsumausgaben": 0,
-      "Andere Ausgaben": 0
+    'Haushalt mit 2 Personen': {
+      'Erfasste Haushalte': 3337,
+      'Hochgerechnete Haushalte': 12918,
+      Haushaltsbruttoeinkommen: 4694,
+      Haushaltsnettoeinkommen: 3647,
+      'Ausgabefaehige Einkommen und Einnahmen': 3715,
+      'Private Konsumausgaben': 2738,
+      'Andere Ausgaben': 1994,
     },
-    "Haushalt mit 3 Personen": {
-      "Erfasste Haushalte": 0,
-      "Hochgerechnete Haushalte": 0,
-      "Haushaltsbruttoeinkommen": 0,
-      "Haushaltsnettoeinkommen": 0,
-      "Ausgabefähige Einkommen und Einnahmen": 0,
-      "Private Konsumausgaben": 0,
-      "Andere Ausgaben": 0
+    'Haushalt mit 3 Personen': {
+      'Erfasste Haushalte': 1176,
+      'Hochgerechnete Haushalte': 4272,
+      Haushaltsbruttoeinkommen: 6035,
+      Haushaltsnettoeinkommen: 4544,
+      'Ausgabefaehige Einkommen und Einnahmen': 4625,
+      'Private Konsumausgaben': 3164,
+      'Andere Ausgaben': 2309,
     },
-    "Haushalt mit 4 Personen": {
-      "Erfasste Haushalte": 0,
-      "Hochgerechnete Haushalte": 0,
-      "Haushaltsbruttoeinkommen": 0,
-      "Haushaltsnettoeinkommen": 0,
-      "Ausgabefähige Einkommen und Einnahmen": 0,
-      "Private Konsumausgaben": 0,
-      "Andere Ausgaben": 0
+    'Haushalt mit 4 Personen': {
+      'Erfasste Haushalte': 822,
+      'Hochgerechnete Haushalte': 3105,
+      Haushaltsbruttoeinkommen: 6862,
+      Haushaltsnettoeinkommen: 5163,
+      'Ausgabefaehige Einkommen und Einnahmen': 5254,
+      'Private Konsumausgaben': 3627,
+      'Andere Ausgaben': 2752,
     },
-    "Haushalt mit 5 und mehr Personen": {
-      "Erfasste Haushalte": 0,
-      "Hochgerechnete Haushalte": 0,
-      "Haushaltsbruttoeinkommen": 0,
-      "Haushaltsnettoeinkommen": 0,
-      "Ausgabefähige Einkommen und Einnahmen": 0,
-      "Private Konsumausgaben": 0,
-      "Andere Ausgaben": 0
-    }
+    'Haushalt mit 5 und mehr Personen': {
+      'Erfasste Haushalte': 226,
+      'Hochgerechnete Haushalte': 1124,
+      Haushaltsbruttoeinkommen: 7257,
+      Haushaltsnettoeinkommen: 5646,
+      'Ausgabefaehige Einkommen und Einnahmen': 5726,
+      'Private Konsumausgaben': 4124,
+      'Andere Ausgaben': 2321,
+    },
   },
-  "2016": {
-    "Haushalt mit 1 Person": {
-      "Erfasste Haushalte": 0,
-      "Hochgerechnete Haushalte": 0,
-      "Haushaltsbruttoeinkommen": 0,
-      "Haushaltsnettoeinkommen": 0,
-      "Ausgabefähige Einkommen und Einnahmen": 0,
-      "Private Konsumausgaben": 0,
-      "Andere Ausgaben": 0
+  2016: {
+    'Haushalt mit 1 Person': {
+      'Erfasste Haushalte': 0,
+      'Hochgerechnete Haushalte': 0,
+      Haushaltsbruttoeinkommen: 0,
+      Haushaltsnettoeinkommen: 0,
+      'Ausgabefaehige Einkommen und Einnahmen': 0,
+      'Private Konsumausgaben': 0,
+      'Andere Ausgaben': 0,
     },
-    "Haushalt mit 2 Personen": {
-      "Erfasste Haushalte": 0,
-      "Hochgerechnete Haushalte": 0,
-      "Haushaltsbruttoeinkommen": 0,
-      "Haushaltsnettoeinkommen": 0,
-      "Ausgabefähige Einkommen und Einnahmen": 0,
-      "Private Konsumausgaben": 0,
-      "Andere Ausgaben": 0
+    'Haushalt mit 2 Personen': {
+      'Erfasste Haushalte': 0,
+      'Hochgerechnete Haushalte': 0,
+      Haushaltsbruttoeinkommen: 0,
+      Haushaltsnettoeinkommen: 0,
+      'Ausgabefaehige Einkommen und Einnahmen': 0,
+      'Private Konsumausgaben': 0,
+      'Andere Ausgaben': 0,
     },
-    "Haushalt mit 3 Personen": {
-      "Erfasste Haushalte": 0,
-      "Hochgerechnete Haushalte": 0,
-      "Haushaltsbruttoeinkommen": 0,
-      "Haushaltsnettoeinkommen": 0,
-      "Ausgabefähige Einkommen und Einnahmen": 0,
-      "Private Konsumausgaben": 0,
-      "Andere Ausgaben": 0
+    'Haushalt mit 3 Personen': {
+      'Erfasste Haushalte': 0,
+      'Hochgerechnete Haushalte': 0,
+      Haushaltsbruttoeinkommen: 0,
+      Haushaltsnettoeinkommen: 0,
+      'Ausgabefaehige Einkommen und Einnahmen': 0,
+      'Private Konsumausgaben': 0,
+      'Andere Ausgaben': 0,
     },
-    "Haushalt mit 4 Personen": {
-      "Erfasste Haushalte": 0,
-      "Hochgerechnete Haushalte": 0,
-      "Haushaltsbruttoeinkommen": 0,
-      "Haushaltsnettoeinkommen": 0,
-      "Ausgabefähige Einkommen und Einnahmen": 0,
-      "Private Konsumausgaben": 0,
-      "Andere Ausgaben": 0
+    'Haushalt mit 4 Personen': {
+      'Erfasste Haushalte': 0,
+      'Hochgerechnete Haushalte': 0,
+      Haushaltsbruttoeinkommen: 0,
+      Haushaltsnettoeinkommen: 0,
+      'Ausgabefaehige Einkommen und Einnahmen': 0,
+      'Private Konsumausgaben': 0,
+      'Andere Ausgaben': 0,
     },
-    "Haushalt mit 5 und mehr Personen": {
-      "Erfasste Haushalte": 0,
-      "Hochgerechnete Haushalte": 0,
-      "Haushaltsbruttoeinkommen": 0,
-      "Haushaltsnettoeinkommen": 0,
-      "Ausgabefähige Einkommen und Einnahmen": 0,
-      "Private Konsumausgaben": 0,
-      "Andere Ausgaben": 0
-    }
+    'Haushalt mit 5 und mehr Personen': {
+      'Erfasste Haushalte': 0,
+      'Hochgerechnete Haushalte': 0,
+      Haushaltsbruttoeinkommen: 0,
+      Haushaltsnettoeinkommen: 0,
+      'Ausgabefaehige Einkommen und Einnahmen': 0,
+      'Private Konsumausgaben': 0,
+      'Andere Ausgaben': 0,
+    },
   },
-  "2017": {
-    "Haushalt mit 1 Person": {
-      "Erfasste Haushalte": 0,
-      "Hochgerechnete Haushalte": 0,
-      "Haushaltsbruttoeinkommen": 0,
-      "Haushaltsnettoeinkommen": 0,
-      "Ausgabefähige Einkommen und Einnahmen": 0,
-      "Private Konsumausgaben": 0,
-      "Andere Ausgaben": 0
+  2017: {
+    'Haushalt mit 1 Person': {
+      'Erfasste Haushalte': 0,
+      'Hochgerechnete Haushalte': 0,
+      Haushaltsbruttoeinkommen: 0,
+      Haushaltsnettoeinkommen: 0,
+      'Ausgabefaehige Einkommen und Einnahmen': 0,
+      'Private Konsumausgaben': 0,
+      'Andere Ausgaben': 0,
     },
-    "Haushalt mit 2 Personen": {
-      "Erfasste Haushalte": 0,
-      "Hochgerechnete Haushalte": 0,
-      "Haushaltsbruttoeinkommen": 0,
-      "Haushaltsnettoeinkommen": 0,
-      "Ausgabefähige Einkommen und Einnahmen": 0,
-      "Private Konsumausgaben": 0,
-      "Andere Ausgaben": 0
+    'Haushalt mit 2 Personen': {
+      'Erfasste Haushalte': 0,
+      'Hochgerechnete Haushalte': 0,
+      Haushaltsbruttoeinkommen: 0,
+      Haushaltsnettoeinkommen: 0,
+      'Ausgabefaehige Einkommen und Einnahmen': 0,
+      'Private Konsumausgaben': 0,
+      'Andere Ausgaben': 0,
     },
-    "Haushalt mit 3 Personen": {
-      "Erfasste Haushalte": 0,
-      "Hochgerechnete Haushalte": 0,
-      "Haushaltsbruttoeinkommen": 0,
-      "Haushaltsnettoeinkommen": 0,
-      "Ausgabefähige Einkommen und Einnahmen": 0,
-      "Private Konsumausgaben": 0,
-      "Andere Ausgaben": 0
+    'Haushalt mit 3 Personen': {
+      'Erfasste Haushalte': 0,
+      'Hochgerechnete Haushalte': 0,
+      Haushaltsbruttoeinkommen: 0,
+      Haushaltsnettoeinkommen: 0,
+      'Ausgabefaehige Einkommen und Einnahmen': 0,
+      'Private Konsumausgaben': 0,
+      'Andere Ausgaben': 0,
     },
-    "Haushalt mit 4 Personen": {
-      "Erfasste Haushalte": 0,
-      "Hochgerechnete Haushalte": 0,
-      "Haushaltsbruttoeinkommen": 0,
-      "Haushaltsnettoeinkommen": 0,
-      "Ausgabefähige Einkommen und Einnahmen": 0,
-      "Private Konsumausgaben": 0,
-      "Andere Ausgaben": 0
+    'Haushalt mit 4 Personen': {
+      'Erfasste Haushalte': 0,
+      'Hochgerechnete Haushalte': 0,
+      Haushaltsbruttoeinkommen: 0,
+      Haushaltsnettoeinkommen: 0,
+      'Ausgabefaehige Einkommen und Einnahmen': 0,
+      'Private Konsumausgaben': 0,
+      'Andere Ausgaben': 0,
     },
-    "Haushalt mit 5 und mehr Personen": {
-      "Erfasste Haushalte": 0,
-      "Hochgerechnete Haushalte": 0,
-      "Haushaltsbruttoeinkommen": 0,
-      "Haushaltsnettoeinkommen": 0,
-      "Ausgabefähige Einkommen und Einnahmen": 0,
-      "Private Konsumausgaben": 0,
-      "Andere Ausgaben": 0
-    }
+    'Haushalt mit 5 und mehr Personen': {
+      'Erfasste Haushalte': 0,
+      'Hochgerechnete Haushalte': 0,
+      Haushaltsbruttoeinkommen: 0,
+      Haushaltsnettoeinkommen: 0,
+      'Ausgabefaehige Einkommen und Einnahmen': 0,
+      'Private Konsumausgaben': 0,
+      'Andere Ausgaben': 0,
+    },
   },
-  "2019": {
-    "Haushalt mit 1 Person": {
-      "Erfasste Haushalte": 0,
-      "Hochgerechnete Haushalte": 0,
-      "Haushaltsbruttoeinkommen": 0,
-      "Haushaltsnettoeinkommen": 0,
-      "Ausgabefähige Einkommen und Einnahmen": 0,
-      "Private Konsumausgaben": 0,
-      "Andere Ausgaben": 0
+  2019: {
+    'Haushalt mit 1 Person': {
+      'Erfasste Haushalte': 0,
+      'Hochgerechnete Haushalte': 0,
+      Haushaltsbruttoeinkommen: 0,
+      Haushaltsnettoeinkommen: 0,
+      'Ausgabefaehige Einkommen und Einnahmen': 0,
+      'Private Konsumausgaben': 0,
+      'Andere Ausgaben': 0,
     },
-    "Haushalt mit 2 Personen": {
-      "Erfasste Haushalte": 0,
-      "Hochgerechnete Haushalte": 0,
-      "Haushaltsbruttoeinkommen": 0,
-      "Haushaltsnettoeinkommen": 0,
-      "Ausgabefähige Einkommen und Einnahmen": 0,
-      "Private Konsumausgaben": 0,
-      "Andere Ausgaben": 0
+    'Haushalt mit 2 Personen': {
+      'Erfasste Haushalte': 0,
+      'Hochgerechnete Haushalte': 0,
+      Haushaltsbruttoeinkommen: 0,
+      Haushaltsnettoeinkommen: 0,
+      'Ausgabefaehige Einkommen und Einnahmen': 0,
+      'Private Konsumausgaben': 0,
+      'Andere Ausgaben': 0,
     },
-    "Haushalt mit 3 Personen": {
-      "Erfasste Haushalte": 0,
-      "Hochgerechnete Haushalte": 0,
-      "Haushaltsbruttoeinkommen": 0,
-      "Haushaltsnettoeinkommen": 0,
-      "Ausgabefähige Einkommen und Einnahmen": 0,
-      "Private Konsumausgaben": 0,
-      "Andere Ausgaben": 0
+    'Haushalt mit 3 Personen': {
+      'Erfasste Haushalte': 0,
+      'Hochgerechnete Haushalte': 0,
+      Haushaltsbruttoeinkommen: 0,
+      Haushaltsnettoeinkommen: 0,
+      'Ausgabefaehige Einkommen und Einnahmen': 0,
+      'Private Konsumausgaben': 0,
+      'Andere Ausgaben': 0,
     },
-    "Haushalt mit 4 Personen": {
-      "Erfasste Haushalte": 0,
-      "Hochgerechnete Haushalte": 0,
-      "Haushaltsbruttoeinkommen": 0,
-      "Haushaltsnettoeinkommen": 0,
-      "Ausgabefähige Einkommen und Einnahmen": 0,
-      "Private Konsumausgaben": 0,
-      "Andere Ausgaben": 0
+    'Haushalt mit 4 Personen': {
+      'Erfasste Haushalte': 0,
+      'Hochgerechnete Haushalte': 0,
+      Haushaltsbruttoeinkommen: 0,
+      Haushaltsnettoeinkommen: 0,
+      'Ausgabefaehige Einkommen und Einnahmen': 0,
+      'Private Konsumausgaben': 0,
+      'Andere Ausgaben': 0,
     },
-    "Haushalt mit 5 und mehr Personen": {
-      "Erfasste Haushalte": 0,
-      "Hochgerechnete Haushalte": 0,
-      "Haushaltsbruttoeinkommen": 0,
-      "Haushaltsnettoeinkommen": 0,
-      "Ausgabefähige Einkommen und Einnahmen": 0,
-      "Private Konsumausgaben": 0,
-      "Andere Ausgaben": 0
-    }
-  }
+    'Haushalt mit 5 und mehr Personen': {
+      'Erfasste Haushalte': 0,
+      'Hochgerechnete Haushalte': 0,
+      Haushaltsbruttoeinkommen: 0,
+      Haushaltsnettoeinkommen: 0,
+      'Ausgabefaehige Einkommen und Einnahmen': 0,
+      'Private Konsumausgaben': 0,
+      'Andere Ausgaben': 0,
+    },
+  },
 }

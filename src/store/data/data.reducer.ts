@@ -1,6 +1,6 @@
 import { reducerWithInitialState } from 'typescript-fsa-reducers'
-import {DataState} from "~store/data/data.interfaces";
-import {data} from "../../../data/data"
+import { data } from '../../../data/data'
+import { DataState } from './data.interfaces'
 
 const INITIAL_STATE: DataState = data
 

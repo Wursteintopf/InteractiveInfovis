@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux'
-import {DataState} from "~store/data/data.interfaces";
-import {DataReducer} from "~store/data/data.reducer";
-import {UiState} from "~store/ui/ui.interfaces";
-import {UiReducer} from "~store/ui/ui.reducer";
+import { DataState } from './data/data.interfaces'
+import { UiState } from './ui/ui.interfaces'
+import { DataReducer } from './data/data.reducer'
+import { UiReducer } from './ui/ui.reducer'
 
 export interface RootState {
     Data: DataState
@@ -10,6 +10,6 @@ export interface RootState {
 }
 
 export const rootReducer = combineReducers<RootState>({
-    Data: DataReducer,
-    Ui: UiReducer
+  Data: DataReducer,
+  Ui: UiReducer,
 })
