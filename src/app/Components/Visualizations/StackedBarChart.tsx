@@ -1,78 +1,139 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useMemo, useRef } from 'react'
 import { scaleBand, scaleLinear, scaleOrdinal } from 'd3-scale'
 import { select } from 'd3-selection'
 import { axisBottom, axisLeft } from 'd3-axis'
 import { stack } from 'd3-shape'
+import { merge, max } from 'd3-array'
 
-interface Income {
+interface Group {
+  label: string
   'Haushaltsbruttoeinkommen': number
   'Haushaltsnettoeinkommen': number
   'Ausgabefaehige Einkommen und Einnahmen': number
-}
-
-interface Expenditure {
   'Private Konsumausgaben': number
   'Andere Ausgaben': number
 }
 
-interface Group {
-  label: string
-  income: Income
-  expenditure: Expenditure
-}
-
 interface StackedBarChartProps {
   groups: Group[]
+  w: number
+  h: number
+  pad: number
 }
 
 const StackedBarChart: React.FC<StackedBarChartProps> = props => {
-  const ref = useRef()
+  const ref = useRef<SVGSVGElement | null>(null)
 
-  useEffect(() => {
-    const svg = select(ref.current)
-    
-    const subgroups = Object.keys(props.groups[0].income)
+  const incomeKeys = ['Haushaltsnettoeinkommen', 'Differenz zu Brutto', 'Sonstige Einahmen']
+  const expenditureKeys = ['Private Konsumausgaben', 'Andere Ausgaben']
+  const labels = props.groups.map(group => group.label)
 
-    const labels = props.groups.map(group => group.label)
+  const spacingLeft = 45
+  const spacingBottom = 50
+  const chartWidth = (props.w - (2 * props.pad) - spacingLeft)
+  const chartHeight = (props.h - (2 * props.pad) - spacingBottom)
+  const maxValue = max(merge(props.groups.map(group => [group.Haushaltsbruttoeinkommen + (group.Haushaltsnettoeinkommen - group['Ausgabefaehige Einkommen und Einnahmen']), group['Private Konsumausgaben'] + group['Andere Ausgaben']])))
 
-    const x = scaleBand()
-      .domain(labels)
-      .range([0, 300])
-      .padding([0.2])
-    svg.append('g')
-      .attr('transform', 'translate(0,' + 300 + ')')
-      .call(axisBottom(x).tickSizeOuter(0))
+  const xOffSet = chartWidth / labels.length
 
-    const y = scaleLinear()
-      .domain([0, 60])
-      .range([300, 0])
-    svg.append('g')
-      .call(axisLeft(y))
+  const y = useMemo(() => {
+    return scaleLinear().domain([0, maxValue]).range([0, chartHeight])
+  }, [])
 
-    const color = scaleOrdinal()
-      .domain(subgroups)
-      .range(['#e41a1c', '#377eb8', '#4daf4a'])
+  const yTicks = useMemo(() => {
+    return y.ticks()
+  }, [])
 
-    // const stackedData = stack().keys(subgroups)(props.groups[0].income)
-    //
-    // svg.append('g')
-    //   .selectAll('g')
-    //   .data(stackedData)
-    //   .enter().append('g')
-    //   .attr('fill', function (d) { return color(d.key) })
-    //   .selectAll('rect')
-    //   .data(function (d) { return d })
-    //   .enter().append('rect')
-    //   .attr('x', function (d) { return x(d.data.group) })
-    //   .attr('y', function (d) { return y(d[1]) })
-    //   .attr('height', function (d) { return y(d[0]) - y(d[1]) })
-    //   .attr('width', x.bandwidth())
+  const yOffSet = chartHeight / yTicks.length
+
+  const stackedIncome = useMemo(() => {
+    const convertedData = props.groups.map(group => {
+      return {
+        Haushaltsnettoeinkommen: group.Haushaltsnettoeinkommen,
+        'Differenz zu Brutto': group.Haushaltsbruttoeinkommen - group.Haushaltsnettoeinkommen,
+        'Sonstige Einahmen': group['Ausgabefaehige Einkommen und Einnahmen'] - group.Haushaltsnettoeinkommen,
+      }
+    })
+
+    const stackedData = stack().keys(incomeKeys)(convertedData)
+
+    return stackedData
+  }, [])
+
+  const stackedExpenditure = useMemo(() => {
+    const stackedData = stack().keys(expenditureKeys)(props.groups)
+
+    return stackedData
+  }, [])
+
+  const color = useMemo(() => {
+    return scaleOrdinal().domain(labels).range(['#e41a1c', '#377eb8', '#4daf4a'])
   }, [])
 
   return (
-    <div style={{ padding: 10 }}>
-      <svg viewBox='0 0 400 400' width='400' height='400' ref={ref} />
-    </div>
+    <svg width={props.w} height={props.h} ref={ref} style={{ padding: props.pad }}>
+      {/** Y Axis **/}
+      <g>
+        <path d={'M ' + spacingLeft + ' 0 V ' + chartHeight} stroke='black' />
+        {
+          yTicks.reverse().map((tick, index) => {
+            return (
+              <g key={index} transform={'translate(' + (spacingLeft - 7) + ',' + (index + 1) * yOffSet + ')'}>
+                <text transform='translate(-38,5)'>{tick}</text>
+                <line x2='7' stroke='black' />
+              </g>
+            )
+          })
+        }
+      </g>
+      {/** X Axis **/}
+      <g>
+        <path d={'M ' + spacingLeft + ' ' + chartHeight + 'H ' + (chartWidth + spacingLeft)} stroke='black' />
+        {
+          labels.map((label, index) => {
+            return (
+              <g key={index} transform={'translate(' + (spacingLeft + index * xOffSet) + ',' + (chartHeight + 20) + ')'}>
+                <text>{label}</text>
+              </g>
+            )
+          })
+        }
+      </g>
+      {/** Income **/}
+      {
+        stackedIncome.map((type, index) => {
+          return (
+            <g key={index} fill={color(index)}>
+              {
+                type.map((rect, index) => {
+                  const height = y(rect[1]) - y(rect[0])
+                  const yPos = chartHeight - height - y(rect[0])
+
+                  return <rect key={index} x={spacingLeft + (index * xOffSet)} y={yPos} height={height} width={30} />
+                })
+              }
+            </g>
+          )
+        })
+      }
+      {/** Expenditure **/}
+      {
+        stackedExpenditure.map((type, index) => {
+          return (
+            <g key={index} fill={color(index)}>
+              {
+                type.map((rect, index) => {
+                  const height = y(rect[1]) - y(rect[0])
+                  const yPos = chartHeight - height - y(rect[0])
+
+                  return <rect key={index} x={spacingLeft + 40 + (index * xOffSet)} y={yPos} height={height} width={30} />
+                })
+              }
+            </g>
+          )
+        })
+      }
+    </svg>
   )
 }
 

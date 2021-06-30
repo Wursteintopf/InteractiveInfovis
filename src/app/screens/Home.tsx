@@ -20,27 +20,27 @@ const Home: React.FC = () => {
   const stackedBarCharData = [
     {
       label: '2014',
-      income: {
-        Haushaltsbruttoeinkommen: 10,
-        Haushaltsnettoeinkommen: 20,
-        'Ausgabefaehige Einkommen und Einnahmen': 30,
-      },
-      expenditure: {
-        'Private Konsumausgaben': 10,
-        'Andere Ausgaben': 20,
-      },
+      Haushaltsbruttoeinkommen: 4101,
+      Haushaltsnettoeinkommen: 3147,
+      'Ausgabefaehige Einkommen und Einnahmen': 3208,
+      'Private Konsumausgaben': 2375,
+      'Andere Ausgaben': 1669,
     },
     {
       label: '2015',
-      income: {
-        Haushaltsbruttoeinkommen: 10,
-        Haushaltsnettoeinkommen: 20,
-        'Ausgabefaehige Einkommen und Einnahmen': 30,
-      },
-      expenditure: {
-        'Private Konsumausgaben': 10,
-        'Andere Ausgaben': 20,
-      },
+      Haushaltsbruttoeinkommen: 4196,
+      Haushaltsnettoeinkommen: 3218,
+      'Ausgabefaehige Einkommen und Einnahmen': 3276,
+      'Private Konsumausgaben': 2391,
+      'Andere Ausgaben': 1711,
+    },
+    {
+      label: '2016',
+      Haushaltsbruttoeinkommen: 4337,
+      Haushaltsnettoeinkommen: 3314,
+      'Ausgabefaehige Einkommen und Einnahmen': 3374,
+      'Private Konsumausgaben': 2480,
+      'Andere Ausgaben': 1698,
     },
   ]
   
@@ -55,7 +55,7 @@ const Home: React.FC = () => {
       </TableZone>
 
       <StackedBarChartZone>
-        <StackedBarChart groups={stackedBarCharData} />
+        <StackedBarChart groups={stackedBarCharData} w={600} h={400} pad={10} />
       </StackedBarChartZone>
 
       <StreamGraphZone>
