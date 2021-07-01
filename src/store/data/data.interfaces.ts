@@ -3,7 +3,9 @@ export interface Household {
     'Hochgerechnete Haushalte': number
     'Haushaltsbruttoeinkommen': number
     'Haushaltsnettoeinkommen': number
+    'Differenz zu Brutto': number
     'Ausgabefaehige Einkommen und Einnahmen': number
+    'Sonstige Einnahmen': number
     'Private Konsumausgaben': number
     'Andere Ausgaben': number
 }
@@ -14,6 +16,7 @@ export interface Year {
     'Haushalt mit 3 Personen': Household
     'Haushalt mit 4 Personen': Household
     'Haushalt mit 5 und mehr Personen': Household
+    'Insgesamt': Household
 }
 
 export interface DataState {

@@ -10,6 +10,8 @@ import { Global } from '@emotion/react'
 import { rootReducer } from './store/root.reducer'
 import Home from './app/screens/Home'
 import { globalStyles } from './app/GlobalStyling'
+import SortedByHousehold from './app/screens/SortedByHousehold'
+import SortedByYear from './app/screens/SortedByYear'
 
 const App = () => {
   const sagaMiddleware = createSagaMiddleware()
@@ -27,6 +29,8 @@ const App = () => {
         <Global styles={globalStyles} />
 
         <Route exact path='/' component={Home} />
+        <Route exact path='/household' component={SortedByHousehold} />
+        <Route exact path='/year' component={SortedByYear} />
       </Router>
     </Provider>
   )

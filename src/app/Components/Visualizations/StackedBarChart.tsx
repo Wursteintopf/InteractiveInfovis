@@ -1,18 +1,8 @@
-import React, { useEffect, useMemo, useRef } from 'react'
-import { scaleBand, scaleLinear, scaleOrdinal } from 'd3-scale'
-import { select } from 'd3-selection'
-import { axisBottom, axisLeft } from 'd3-axis'
+import React, { useMemo, useRef } from 'react'
+import { scaleLinear, scaleOrdinal } from 'd3-scale'
 import { stack } from 'd3-shape'
-import { merge, max } from 'd3-array'
-
-interface Group {
-  label: string
-  'Haushaltsbruttoeinkommen': number
-  'Haushaltsnettoeinkommen': number
-  'Ausgabefaehige Einkommen und Einnahmen': number
-  'Private Konsumausgaben': number
-  'Andere Ausgaben': number
-}
+import { max, merge } from 'd3-array'
+import { Group } from './VisualizationInterfaces'
 
 interface StackedBarChartProps {
   groups: Group[]
@@ -24,7 +14,7 @@ interface StackedBarChartProps {
 const StackedBarChart: React.FC<StackedBarChartProps> = props => {
   const ref = useRef<SVGSVGElement | null>(null)
 
-  const incomeKeys = ['Haushaltsnettoeinkommen', 'Differenz zu Brutto', 'Sonstige Einahmen']
+  const incomeKeys = ['Haushaltsnettoeinkommen', 'Differenz zu Brutto', 'Sonstige Einnahmen']
   const expenditureKeys = ['Private Konsumausgaben', 'Andere Ausgaben']
   const labels = props.groups.map(group => group.label)
 
@@ -32,39 +22,26 @@ const StackedBarChart: React.FC<StackedBarChartProps> = props => {
   const spacingBottom = 50
   const chartWidth = (props.w - (2 * props.pad) - spacingLeft)
   const chartHeight = (props.h - (2 * props.pad) - spacingBottom)
-  const maxValue = max(merge(props.groups.map(group => [group.Haushaltsbruttoeinkommen + (group.Haushaltsnettoeinkommen - group['Ausgabefaehige Einkommen und Einnahmen']), group['Private Konsumausgaben'] + group['Andere Ausgaben']])))
-
-  const xOffSet = chartWidth / labels.length
+  const maxValue = max(merge(props.groups.map(group => [group.Haushaltsnettoeinkommen + group['Differenz zu Brutto'] + group['Sonstige Einnahmen'], group['Private Konsumausgaben'] + group['Andere Ausgaben']])))
 
   const y = useMemo(() => {
     return scaleLinear().domain([0, maxValue]).range([0, chartHeight])
-  }, [])
+  }, [props.groups])
 
   const yTicks = useMemo(() => {
     return y.ticks()
-  }, [])
+  }, [props.groups])
 
+  const xOffSet = chartWidth / labels.length
   const yOffSet = chartHeight / yTicks.length
 
   const stackedIncome = useMemo(() => {
-    const convertedData = props.groups.map(group => {
-      return {
-        Haushaltsnettoeinkommen: group.Haushaltsnettoeinkommen,
-        'Differenz zu Brutto': group.Haushaltsbruttoeinkommen - group.Haushaltsnettoeinkommen,
-        'Sonstige Einahmen': group['Ausgabefaehige Einkommen und Einnahmen'] - group.Haushaltsnettoeinkommen,
-      }
-    })
-
-    const stackedData = stack().keys(incomeKeys)(convertedData)
-
-    return stackedData
-  }, [])
+    return stack().keys(incomeKeys)(props.groups)
+  }, [props.groups])
 
   const stackedExpenditure = useMemo(() => {
-    const stackedData = stack().keys(expenditureKeys)(props.groups)
-
-    return stackedData
-  }, [])
+    return stack().keys(expenditureKeys)(props.groups)
+  }, [props.groups])
 
   const color = useMemo(() => {
     return scaleOrdinal().domain(labels).range(['#e41a1c', '#377eb8', '#4daf4a'])

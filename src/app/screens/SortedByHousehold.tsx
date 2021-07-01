@@ -15,12 +15,11 @@ import GeneralInfo from '../Components/Visualizations/GeneralInfo'
 import StarPlot from '../Components/Visualizations/StarPlot'
 import StreamGraph from '../Components/Visualizations/StreamGraph'
 import StackedBarChart from '../Components/Visualizations/StackedBarChart'
-import { Group } from '../Components/Visualizations/VisualizationInterfaces'
 import { useSelector } from 'react-redux'
 import { getData } from '../../store/data/data.selectors'
-import Switch from '@material-ui/core/Switch';
+import { Group } from '../Components/Visualizations/VisualizationInterfaces'
 
-const Home: React.FC = () => {
+const SortedByHousehold: React.FC = () => {
   const data = useSelector(getData)
 
   const flattenByHousehold = (data) => {
@@ -72,23 +71,6 @@ const Home: React.FC = () => {
     })
   }
 
-  const flattenedByYear = (data) => {
-    return Object.keys(data).map(key => {
-      return {
-        label: key,
-        Haushaltsbruttoeinkommen: data[key].Insgesamt.Haushaltsbruttoeinkommen,
-        Haushaltsnettoeinkommen: data[key].Insgesamt.Haushaltsnettoeinkommen,
-        'Ausgabefaehige Einkommen und Einnahmen': data[key].Insgesamt['Ausgabefaehige Einkommen und Einnahmen'],
-        'Differenz zu Brutto': data[key].Insgesamt['Differenz zu Brutto'],
-        'Sonstige Einnahmen': data[key].Insgesamt['Sonstige Einnahmen'],
-        'Private Konsumausgaben': data[key].Insgesamt['Private Konsumausgaben'],
-        'Andere Ausgaben': data[key].Insgesamt['Andere Ausgaben'],
-      }
-    })
-  }
-
-  const [flattenBy, setFlattenBy] = useState<'year' | 'household'>('year')
-  
   return (
     <MainLayout>
       <PieChartZone>
@@ -100,15 +82,7 @@ const Home: React.FC = () => {
       </TableZone>
 
       <StackedBarChartZone>
-        <StackedBarChart groups={flattenBy === 'year' ? flattenedByYear(data) : flattenByHousehold(data)} w={600} h={400} pad={10} />
-        Flattened By Year <Switch
-          color='default'
-          inputProps={{ 'aria-label': 'checkbox with default color' }}
-          onChange={() => {
-            if (flattenBy === 'year') setFlattenBy('household')
-            else setFlattenBy('year')
-          }}
-        /> Flattened By Household
+        <StackedBarChart groups={flattenByHousehold(data)} w={600} h={400} pad={10} />
       </StackedBarChartZone>
 
       <StreamGraphZone>
@@ -130,4 +104,4 @@ const Home: React.FC = () => {
   )
 }
 
-export default Home
+export default SortedByHousehold

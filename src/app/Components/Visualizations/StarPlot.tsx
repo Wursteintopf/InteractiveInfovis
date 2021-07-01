@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Starplot = () => {
+const StarPlot = () => {
   return (
     <div>
 
@@ -8,4 +8,4 @@ const Starplot = () => {
   )
 }
 
-export default Starplot
+export default StarPlot
