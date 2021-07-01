@@ -92,7 +92,7 @@ const Home: React.FC = () => {
   return (
     <MainLayout>
       <PieChartZone>
-        <PieChart />
+        <StarPlot groups={flattenBy === 'year' ? flattenedByYear(data) : flattenByHousehold(data)} size={400} pad={10} />
       </PieChartZone>
 
       <TableZone>
@@ -116,7 +116,7 @@ const Home: React.FC = () => {
       </StreamGraphZone>
 
       <StarplotZone>
-        <StarPlot />
+        <PieChart />
       </StarplotZone>
 
       <CircleGraphZone>

@@ -12,8 +12,6 @@ interface StackedBarChartProps {
 }
 
 const StackedBarChart: React.FC<StackedBarChartProps> = props => {
-  const ref = useRef<SVGSVGElement | null>(null)
-
   const incomeKeys = ['Haushaltsnettoeinkommen', 'Differenz zu Brutto', 'Sonstige Einnahmen']
   const expenditureKeys = ['Private Konsumausgaben', 'Andere Ausgaben']
   const labels = props.groups.map(group => group.label)
@@ -48,7 +46,7 @@ const StackedBarChart: React.FC<StackedBarChartProps> = props => {
   }, [])
 
   return (
-    <svg width={props.w} height={props.h} ref={ref} style={{ padding: props.pad }}>
+    <svg width={props.w} height={props.h} style={{ padding: props.pad }}>
       {/** Y Axis **/}
       <g>
         <path d={'M ' + spacingLeft + ' 0 V ' + chartHeight} stroke='black' />
