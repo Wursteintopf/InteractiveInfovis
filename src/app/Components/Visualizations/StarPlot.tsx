@@ -1,11 +1,12 @@
 import React, { useMemo } from 'react'
 import { Group } from './VisualizationInterfaces'
-import { max, merge } from 'd3-array'
+import { min, max, merge } from 'd3-array'
 import { scaleLinear, scaleOrdinal } from 'd3-scale'
 import { convertAngleAndLengthToCoordinates } from '../../../util/MathUtil'
 
 interface StarPlotProps {
   groups: Group[]
+  w: number
   size: number
   pad: number
 }
@@ -15,14 +16,15 @@ const StarPlot:React.FC<StarPlotProps> = props => {
   const chartSize = (props.size - (2 * props.pad))
   const radius = chartSize / 2
   const maxValue = max(merge(props.groups.map(group => [group.Haushaltsbruttoeinkommen, group.Haushaltsnettoeinkommen, group['Ausgabefaehige Einkommen und Einnahmen'], group['Private Konsumausgaben'], group['Andere Ausgaben']])))
+  const minValue = min(merge(props.groups.map(group => [group.Haushaltsbruttoeinkommen, group.Haushaltsnettoeinkommen, group['Ausgabefaehige Einkommen und Einnahmen'], group['Private Konsumausgaben'], group['Andere Ausgaben']])))
   const axes = ['Haushaltsbruttoeinkommen', 'Haushaltsnettoeinkommen', 'Ausgabefaehige Einkommen und Einnahmen', 'Private Konsumausgaben', 'Andere Ausgaben']
 
   const scale = useMemo(() => {
-    return scaleLinear().domain([0, maxValue]).range([0, radius])
+    return scaleLinear().domain([minValue, maxValue]).range([0, radius])
   }, [props.groups])
 
   const scaleTicks = useMemo(() => {
-    return scale.ticks(5)
+    return scale.ticks(4)
   }, [props.groups])
 
   const tickOffset = radius / scaleTicks.length
@@ -32,7 +34,7 @@ const StarPlot:React.FC<StarPlotProps> = props => {
   }, [])
 
   return (
-    <svg viewBox={-props.size / 2 + ' ' + -props.size / 2 + ' ' + props.size + ' ' + props.size} width={props.size} height={props.size} style={{ padding: props.pad }}>
+    <svg viewBox={-props.w / 2 + ' ' + -props.size / 2 + ' ' + props.w + ' ' + props.size} width={props.w} height={props.size} style={{ padding: props.pad }}>
       {/** Axes **/}
       <g>
         {
@@ -42,7 +44,7 @@ const StarPlot:React.FC<StarPlotProps> = props => {
             return (
               <g key={index}>
                 <path d={'M 0 0 L ' + coords[0] + ' ' + coords[1]} stroke='black' />
-                <text transform={'translate(' + coords[0] + ',' + coords[1] + ')'} style={{ fontSize: 12 }} text-anchor="middle">{axe}</text>
+                <text transform={'translate(' + coords[0] + ',' + coords[1] + ')'} style={{ fontSize: 12 }} textAnchor='middle'>{axe}</text>
               </g>
             )
           })
@@ -70,7 +72,7 @@ const StarPlot:React.FC<StarPlotProps> = props => {
           })
           pathString += coordList[0][0] + ' ' + coordList[0][1]
 
-          return <path key={index} d={pathString} stroke={color(index)} fill='none' />
+          return <path key={index} d={pathString} stroke={color(index)} strokeWidth={2} fill={color(index)} fillOpacity='20%' />
         })}
       </g>
     </svg>

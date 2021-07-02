@@ -8,10 +8,10 @@ import { applyMiddleware, createStore } from 'redux'
 import rootSaga from './store/root.sagas'
 import { Global } from '@emotion/react'
 import { rootReducer } from './store/root.reducer'
-import Home from './app/screens/Home'
 import { globalStyles } from './app/GlobalStyling'
-import SortedByHousehold from './app/screens/SortedByHousehold'
-import SortedByYear from './app/screens/SortedByYear'
+import Screen2 from './app/screens/Screen2'
+import Screen3 from './app/screens/Screen3'
+import Screen1 from './app/screens/Screen1'
 
 const App = () => {
   const sagaMiddleware = createSagaMiddleware()
@@ -28,9 +28,9 @@ const App = () => {
       <Router>
         <Global styles={globalStyles} />
 
-        <Route exact path='/' component={Home} />
-        <Route exact path='/household' component={SortedByHousehold} />
-        <Route exact path='/year' component={SortedByYear} />
+        <Route exact path='/' component={Screen1} />
+        <Route exact path='/screen2' component={Screen2} />
+        <Route exact path='/screen3' component={Screen3} />
       </Router>
     </Provider>
   )
