@@ -1,6 +1,10 @@
 import { createSelector } from 'reselect'
 import { RootState } from '../root.reducer'
-import { Group } from '../../app/Components/Visualizations/VisualizationInterfaces'
+import { stack } from 'd3-shape'
+import { Group } from './data.interfaces'
+
+const incomeKeys = ['Haushaltsnettoeinkommen', 'Differenz zu Brutto', 'Sonstige Einnahmen']
+const expenditureKeys = ['Private Konsumausgaben', 'Andere Ausgaben']
 
 const state = (state: RootState) => state
 
@@ -19,6 +23,7 @@ const flattenByHousehold = (data) => {
 
         flattened.push({
           label: key2,
+          'Erfasste Haushalte': data[key][key2]['Erfasste Haushalte'] + search[0]['Erfasste Haushalte'],
           Haushaltsbruttoeinkommen: data[key][key2].Haushaltsbruttoeinkommen + search[0].Haushaltsbruttoeinkommen,
           Haushaltsnettoeinkommen: data[key][key2].Haushaltsnettoeinkommen + search[0].Haushaltsnettoeinkommen,
           'Ausgabefaehige Einkommen und Einnahmen': data[key][key2]['Ausgabefaehige Einkommen und Einnahmen'] + search[0]['Ausgabefaehige Einkommen und Einnahmen'],
@@ -30,6 +35,7 @@ const flattenByHousehold = (data) => {
       } else if (key2 !== 'Insgesamt') {
         flattened.push({
           label: key2,
+          'Erfasste Haushalte': data[key][key2]['Erfasste Haushalte'],
           Haushaltsbruttoeinkommen: data[key][key2].Haushaltsbruttoeinkommen,
           Haushaltsnettoeinkommen: data[key][key2].Haushaltsnettoeinkommen,
           'Ausgabefaehige Einkommen und Einnahmen': data[key][key2]['Ausgabefaehige Einkommen und Einnahmen'],
@@ -47,6 +53,7 @@ const flattenByHousehold = (data) => {
   return flattened.map(group => {
     return {
       label: group.label.replace('Haushalt mit ', ''),
+      'Erfasste Haushalte': group['Erfasste Haushalte'] / size,
       Haushaltsbruttoeinkommen: group.Haushaltsbruttoeinkommen / size,
       Haushaltsnettoeinkommen: group.Haushaltsnettoeinkommen / size,
       'Ausgabefaehige Einkommen und Einnahmen': group['Ausgabefaehige Einkommen und Einnahmen'] / size,
@@ -62,6 +69,7 @@ const flattenedByYear = (data) => {
   return Object.keys(data).map(key => {
     return {
       label: key,
+      'Erfasste Haushalte': data[key].Insgesamt['Erfasste Haushalte'],
       Haushaltsbruttoeinkommen: data[key].Insgesamt.Haushaltsbruttoeinkommen,
       Haushaltsnettoeinkommen: data[key].Insgesamt.Haushaltsnettoeinkommen,
       'Ausgabefaehige Einkommen und Einnahmen': data[key].Insgesamt['Ausgabefaehige Einkommen und Einnahmen'],
@@ -80,5 +88,19 @@ export const getFlattenedData = createSelector(
 
     if (flattenedBy === 'year') return flattenedByYear(state.Data)
     else return flattenByHousehold(state.Data)
+  },
+)
+
+export const getStackedIncomeData = createSelector(
+  getFlattenedData,
+  state => {
+    return stack().keys(incomeKeys)(state)
+  },
+)
+
+export const getStackedExpenditureData = createSelector(
+  getFlattenedData,
+  state => {
+    return stack().keys(expenditureKeys)(state)
   },
 )

@@ -1,8 +1,9 @@
 import React, { useMemo, useRef } from 'react'
 import { scaleLinear, scaleOrdinal } from 'd3-scale'
-import { stack } from 'd3-shape'
 import { max, merge } from 'd3-array'
-import { Group } from './VisualizationInterfaces'
+import { useSelector } from 'react-redux'
+import { getStackedExpenditureData, getStackedIncomeData } from '../../../store/data/data.selectors'
+import { Group } from '../../../store/data/data.interfaces'
 
 interface StackedBarChartProps {
   groups: Group[]
@@ -33,13 +34,8 @@ const StackedBarChart: React.FC<StackedBarChartProps> = props => {
   const xOffSet = chartWidth / labels.length
   const yOffSet = chartHeight / yTicks.length
 
-  const stackedIncome = useMemo(() => {
-    return stack().keys(incomeKeys)(props.groups)
-  }, [props.groups])
-
-  const stackedExpenditure = useMemo(() => {
-    return stack().keys(expenditureKeys)(props.groups)
-  }, [props.groups])
+  const stackedIncome = useSelector(getStackedIncomeData)
+  const stackedExpenditure = useSelector(getStackedExpenditureData)
 
   const color = useMemo(() => {
     return scaleOrdinal().domain(labels).range(['#e41a1c', '#377eb8', '#4daf4a'])

@@ -1,8 +1,8 @@
 import React, { useMemo } from 'react'
-import { Group } from './VisualizationInterfaces'
 import { min, max, merge } from 'd3-array'
 import { scaleLinear, scaleOrdinal } from 'd3-scale'
 import { convertAngleAndLengthToCoordinates } from '../../../util/MathUtil'
+import { Group } from '../../../store/data/data.interfaces'
 
 interface StarPlotProps {
   groups: Group[]

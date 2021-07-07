@@ -1,10 +1,22 @@
 export interface Household {
     'Erfasste Haushalte': number
-    'Hochgerechnete Haushalte': number
+    'Hochgerechnete Haushalte'?: number
     'Haushaltsbruttoeinkommen': number
     'Haushaltsnettoeinkommen': number
     'Differenz zu Brutto': number
     'Ausgabefaehige Einkommen und Einnahmen': number
+    'Sonstige Einnahmen': number
+    'Private Konsumausgaben': number
+    'Andere Ausgaben': number
+}
+
+export interface Group {
+    label: string
+    'Erfasste Haushalte': number
+    'Haushaltsbruttoeinkommen': number
+    'Haushaltsnettoeinkommen': number
+    'Ausgabefaehige Einkommen und Einnahmen': number
+    'Differenz zu Brutto': number
     'Sonstige Einnahmen': number
     'Private Konsumausgaben': number
     'Andere Ausgaben': number
