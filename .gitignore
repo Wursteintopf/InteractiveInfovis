@@ -3,6 +3,7 @@
 .idea
 dist
 node_modules
+.parcel-cache
 
 # Code files
 *.css
