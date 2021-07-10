@@ -43,7 +43,7 @@ const LineChart: React.FC<LineChartProps> = (props) => {
       {/** Footer **/}
       <g transform={'translate(' + spacingLeft + ',' + (spacingTop + chartHeight) + ')'}>
         {
-          props.groups.map((group, index) => <text key={index} style={{ fontSize: 11 }} transform={'translate(' + (index * xOffset) + ',20)'} textAnchor='middle'>{group.label}</text>)
+          props.groups.map((group, index) => <text key={index} style={{ fontSize: 12 }} transform={'translate(' + (index * xOffset) + ',20)'} textAnchor='middle'>{group.label}</text>)
         }
       </g>
     </svg>
