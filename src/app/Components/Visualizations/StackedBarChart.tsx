@@ -35,8 +35,12 @@ const StackedBarChart: React.FC<StackedBarChartProps> = props => {
   const stackedIncome = useSelector(getStackedIncomeData)
   const stackedExpenditure = useSelector(getStackedExpenditureData)
 
-  const color = useMemo(() => {
+  const incomeColor = useMemo(() => {
     return scaleOrdinal().domain(labels).range(['#e41a1c', '#377eb8', '#4daf4a'])
+  }, [])
+
+  const expenditureColor = useMemo(() => {
+    return scaleOrdinal().domain(labels).range(['#A901DB', '#FE9A2E'])
   }, [])
 
   return (
@@ -72,7 +76,7 @@ const StackedBarChart: React.FC<StackedBarChartProps> = props => {
       {
         stackedIncome.map((type, index) => {
           return (
-            <g key={index} fill={color(index)}>
+            <g key={index} fill={incomeColor(index)}>
               {
                 type.map((rect, index) => {
                   const height = y(rect[1]) - y(rect[0])
@@ -89,7 +93,7 @@ const StackedBarChart: React.FC<StackedBarChartProps> = props => {
       {
         stackedExpenditure.map((type, index) => {
           return (
-            <g key={index} fill={color(index)}>
+            <g key={index} fill={expenditureColor(index)}>
               {
                 type.map((rect, index) => {
                   const height = y(rect[1]) - y(rect[0])

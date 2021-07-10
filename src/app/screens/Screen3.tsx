@@ -9,6 +9,7 @@ import { getFlattenedBy } from '../../store/ui/ui.selectors'
 import { setFlattenedBy } from '../../store/ui/ui.actions'
 import PieChart from '../Components/Visualizations/PieChart'
 import LineChart from '../Components/Visualizations/LineChart'
+import StackedAreaGraph from '../Components/Visualizations/StackedAreaGraph'
 
 const Screen3: React.FC = () => {
   const dispatch = useDispatch()
@@ -19,7 +20,7 @@ const Screen3: React.FC = () => {
     <Screen3Layout>
       <Left>
         <UpperLeft>
-          <LineChart w={700} h={400} groups={flattenedData} pad={10} />
+          <StackedAreaGraph w={600} h={400} pad={10} groups={flattenedData} />
         </UpperLeft>
         <BottomLeft>
           <StackedBarChart groups={flattenedData} w={600} h={400} pad={10} />
@@ -30,7 +31,8 @@ const Screen3: React.FC = () => {
           <StarPlot groups={flattenedData} w={600} size={400} pad={10} />
         </UpperRight>
         <BottomRight>
-          <div style={{ marginLeft: 80, marginTop: 80 }}>
+          <LineChart w={700} h={400} groups={flattenedData} pad={10} />
+          <div style={{ marginLeft: 80, marginTop: 0 }}>
             Flattened By Year <Switch
               color='default'
               inputProps={{ 'aria-label': 'checkbox with default color' }}
