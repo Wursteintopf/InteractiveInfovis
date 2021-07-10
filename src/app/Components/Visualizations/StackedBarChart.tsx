@@ -1,4 +1,4 @@
-import React, { useMemo, useRef } from 'react'
+import React, { useMemo } from 'react'
 import { scaleLinear, scaleOrdinal } from 'd3-scale'
 import { max, merge } from 'd3-array'
 import { useSelector } from 'react-redux'
@@ -13,8 +13,6 @@ interface StackedBarChartProps {
 }
 
 const StackedBarChart: React.FC<StackedBarChartProps> = props => {
-  const incomeKeys = ['Haushaltsnettoeinkommen', 'Differenz zu Brutto', 'Sonstige Einnahmen']
-  const expenditureKeys = ['Private Konsumausgaben', 'Andere Ausgaben']
   const labels = props.groups.map(group => group.label)
 
   const spacingLeft = 45
