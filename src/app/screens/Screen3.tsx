@@ -8,6 +8,7 @@ import StackedBarChart from '../Components/Visualizations/StackedBarChart'
 import { getFlattenedBy } from '../../store/ui/ui.selectors'
 import { setFlattenedBy } from '../../store/ui/ui.actions'
 import PieChart from '../Components/Visualizations/PieChart'
+import LineChart from '../Components/Visualizations/LineChart'
 
 const Screen3: React.FC = () => {
   const dispatch = useDispatch()
@@ -18,7 +19,7 @@ const Screen3: React.FC = () => {
     <Screen3Layout>
       <Left>
         <UpperLeft>
-          <PieChart groups={flattenedData} size={400} pad={10} />
+          <LineChart w={700} h={400} groups={flattenedData} pad={10} />
         </UpperLeft>
         <BottomLeft>
           <StackedBarChart groups={flattenedData} w={600} h={400} pad={10} />

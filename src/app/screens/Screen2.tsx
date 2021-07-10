@@ -7,11 +7,13 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getSelectedHouseholdSize } from '../../store/ui/ui.selectors'
 import { setSelectedHouseholdSize } from '../../store/ui/ui.actions'
 import { householdSize } from '../../store/ui/ui.interfaces'
+import PieChart from '../Components/Visualizations/PieChart'
+import { getFlattenedData } from '../../store/data/data.selectors'
 
 const Screen2: React.FC = () => {
-  const history = useHistory()
   const selectedHouseholdSize = useSelector(getSelectedHouseholdSize)
   const dispatch = useDispatch()
+  const flattenedData = useSelector(getFlattenedData)
 
   const color = useMemo(() => {
     return scaleOrdinal().domain([0, 1, 2, 3, 4, 5]).range(['#e41a1c', '#377eb8', '#4daf4a', '#ff00ff', '#ffff00'])
@@ -43,22 +45,7 @@ const Screen2: React.FC = () => {
         </PieChartSelector>
         <PieChartFull>
           <Link to='/screen3'>
-            <svg viewBox='-200 -200 400 450' width={400} height={450}>
-              {
-                [0, 1, 2, 3, 4].map(index => {
-                  const [x, y] = convertAngleAndLengthToCoordinates(360 / 5 * index, 200)
-                  const [nextX, nextY] = convertAngleAndLengthToCoordinates(360 / 5 * (index + 1), 200)
-
-                  return <path key={index} d={'M ' + x + ' ' + y + 'A 200 200 0 0 1 ' + nextX + ' ' + nextY + 'L 0 0'} fill={color(index)} />
-                })
-              }
-              <text transform='translate(0,230)' textAnchor='middle'>{selectedHouseholdSize} Person(en)</text>
-              <text transform='translate(80,-50)' textAnchor='middle'>2014</text>
-              <text transform='translate(80,50)' textAnchor='middle'>2015</text>
-              <text transform='translate(-10,80)' textAnchor='middle'>2016</text>
-              <text transform='translate(-80,7)' textAnchor='middle'>2017</text>
-              <text transform='translate(-20,-80)' textAnchor='middle'>2019</text>
-            </svg>
+            <PieChart size={600} groups={flattenedData} pad={10} />
           </Link>
         </PieChartFull>
       </LeftArea>
