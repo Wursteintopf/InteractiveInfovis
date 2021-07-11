@@ -9,9 +9,11 @@ import rootSaga from './store/root.sagas'
 import { Global } from '@emotion/react'
 import { rootReducer } from './store/root.reducer'
 import { globalStyles } from './app/GlobalStyling'
-import Screen2 from './app/screens/Screen2'
-import Screen3 from './app/screens/Screen3'
-import Screen1 from './app/screens/Screen1'
+import Screen2 from './app/screens_old/Screen2'
+import Screen3 from './app/screens_old/Screen3'
+import Screen1 from './app/screens_old/Screen1'
+import Data from './app/Data/Data'
+import Remote from './app/Remote/Remote'
 
 const App = () => {
   const sagaMiddleware = createSagaMiddleware()
@@ -28,9 +30,8 @@ const App = () => {
       <Router>
         <Global styles={globalStyles} />
 
-        <Route exact path='/' component={Screen1} />
-        <Route exact path='/screen2' component={Screen2} />
-        <Route exact path='/screen3' component={Screen3} />
+        <Route exact path='/' component={Data} />
+        <Route exact path='/remote' component={Remote} />
       </Router>
     </Provider>
   )

@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getSelectedHouseholdSize } from '../../store/ui/ui.selectors'
 import { setSelectedHouseholdSize } from '../../store/ui/ui.actions'
 import { householdSize } from '../../store/ui/ui.interfaces'
-import PieChart from '../Components/Visualizations/PieChart'
+import NightingaleRoseChart from '../Components/Visualizations/PieChart'
 import { getFlattenedData } from '../../store/data/data.selectors'
 
 const Screen2: React.FC = () => {
@@ -45,7 +45,7 @@ const Screen2: React.FC = () => {
         </PieChartSelector>
         <PieChartFull>
           <Link to='/screen3'>
-            <PieChart size={600} groups={flattenedData} pad={10} />
+            <NightingaleRoseChart size={600} groups={flattenedData} pad={10} />
           </Link>
         </PieChartFull>
       </LeftArea>

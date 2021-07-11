@@ -1,9 +1,10 @@
 import React, { useMemo } from 'react'
-import { scaleLinear, scaleOrdinal } from 'd3-scale'
+import { scaleLinear } from 'd3-scale'
 import { max, merge } from 'd3-array'
 import { useSelector } from 'react-redux'
 import { getStackedExpenditureData, getStackedIncomeData } from '../../../store/data/data.selectors'
 import { Group } from '../../../store/data/data.interfaces'
+import { getColorByKey } from '../../../style/theme'
 
 interface StackedBarChartProps {
   groups: Group[]
@@ -34,14 +35,6 @@ const StackedBarChart: React.FC<StackedBarChartProps> = props => {
   const stackedIncome = useSelector(getStackedIncomeData)
   const stackedExpenditure = useSelector(getStackedExpenditureData)
 
-  const incomeColor = useMemo(() => {
-    return scaleOrdinal().domain(labels).range(['#e41a1c', '#377eb8', '#4daf4a'])
-  }, [])
-
-  const expenditureColor = useMemo(() => {
-    return scaleOrdinal().domain(labels).range(['#A901DB', '#FE9A2E'])
-  }, [])
-
   return (
     <svg width={props.w} height={props.h} style={{ padding: props.pad }}>
       {/** Y Axis **/}
@@ -51,7 +44,7 @@ const StackedBarChart: React.FC<StackedBarChartProps> = props => {
           yTicks.map((tick, index) => {
             return (
               <g key={index} transform={'translate(' + (spacingLeft - 7) + ',' + (chartHeight - y(tick)) + ')'}>
-                <text transform='translate(-38,5)'>{tick}</text>
+                <text transform='translate(-39,5)' style={{ fontSize: 12 }}>{tick}€</text>
                 <line x2='7' stroke='black' />
               </g>
             )
@@ -65,7 +58,7 @@ const StackedBarChart: React.FC<StackedBarChartProps> = props => {
           labels.map((label, index) => {
             return (
               <g key={index} transform={'translate(' + (spacingLeft + index * xOffSet) + ',' + (chartHeight + 20) + ')'}>
-                <text>{label}</text>
+                <text style={{ fontSize: 12 }}>{label}</text>
               </g>
             )
           })
@@ -75,7 +68,7 @@ const StackedBarChart: React.FC<StackedBarChartProps> = props => {
       {
         stackedIncome.map((type, index) => {
           return (
-            <g key={index} fill={incomeColor(index)}>
+            <g key={index} fill={getColorByKey(type.key)}>
               {
                 type.map((rect, index) => {
                   const height = y(rect[1]) - y(rect[0])
@@ -92,7 +85,7 @@ const StackedBarChart: React.FC<StackedBarChartProps> = props => {
       {
         stackedExpenditure.map((type, index) => {
           return (
-            <g key={index} fill={expenditureColor(index)}>
+            <g key={index} fill={getColorByKey(type.key)}>
               {
                 type.map((rect, index) => {
                   const height = y(rect[1]) - y(rect[0])

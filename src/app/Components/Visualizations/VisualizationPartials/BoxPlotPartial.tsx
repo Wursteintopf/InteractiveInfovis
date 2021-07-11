@@ -2,6 +2,7 @@ import React, { useMemo } from 'react'
 import { scaleLinear } from 'd3-scale'
 import { max, min, quantile } from 'd3-array'
 import { path } from 'd3-path'
+import { getColorByKey } from '../../../../style/theme'
 
 interface BoxPlotPartialProps {
   w: number
@@ -9,6 +10,7 @@ interface BoxPlotPartialProps {
   min: number
   max: number
   values: number[]
+  label: string
 }
 
 const BoxPlotPartial: React.FC<BoxPlotPartialProps> = (props) => {
@@ -51,7 +53,7 @@ const BoxPlotPartial: React.FC<BoxPlotPartialProps> = (props) => {
 
   return (
     <g>
-      <path d={drawBoxplot(path())} fill='green' fillOpacity='20%' stroke='black' />
+      <path d={drawBoxplot(path())} fill={getColorByKey(props.label)} stroke='black' />
     </g>
   )
 }

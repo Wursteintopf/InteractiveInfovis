@@ -33,7 +33,7 @@ const LineChart: React.FC<LineChartProps> = (props) => {
           Object.keys(props.groups[0]).filter(e => !unwantedKeys.includes(e)).map((key, index) => {
             return (
               <g key={index} transform={'translate(0,' + index * segmentHeight + ')'}>
-                <LineChartPartial w={chartWidth} h={chartHeight / Object.keys(props.groups[0]).filter(e => !unwantedKeys.includes(e)).length} values={props.groups.map(group => group[key])} />
+                <LineChartPartial label={key} w={chartWidth} h={chartHeight / Object.keys(props.groups[0]).filter(e => !unwantedKeys.includes(e)).length} values={props.groups.map(group => group[key])} />
                 <text style={{ fontSize: 11 }} transform={'translate(' + (chartWidth + 10) + ',30)'}>{key}</text>
               </g>
             )
