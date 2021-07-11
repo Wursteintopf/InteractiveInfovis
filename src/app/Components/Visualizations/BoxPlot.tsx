@@ -37,8 +37,6 @@ const BoxPlot: React.FC<BoxPlotPartials> = (props) => {
     return x.ticks(5)
   }, [props.groups])
 
-  const xOffset = chartWidth / xTicks.length
-
   return (
     <svg width={props.w} height={props.h} style={{ padding: props.pad }}>
       {/** X Axis **/}
@@ -61,7 +59,7 @@ const BoxPlot: React.FC<BoxPlotPartials> = (props) => {
           Object.keys(props.groups[0]).filter(e => !unwantedKeys.includes(e)).map((key, index) => {
             return (
               <g key={index} transform={'translate(0,' + index * segmentHeight + ')'}>
-                <BoxPlotPartial w={chartWidth} h={chartHeight / Object.keys(props.groups[0]).filter(e => !unwantedKeys.includes(e)).length} values={props.groups.map(group => group[key])} min={minValue} max={maxValue} />
+                <BoxPlotPartial label={key} w={chartWidth} h={chartHeight / Object.keys(props.groups[0]).filter(e => !unwantedKeys.includes(e)).length} values={props.groups.map(group => group[key])} min={minValue} max={maxValue} />
                 <text style={{ fontSize: 11 }} transform={'translate(' + (chartWidth + 10) + ',30)'}>{key}</text>
               </g>
             )

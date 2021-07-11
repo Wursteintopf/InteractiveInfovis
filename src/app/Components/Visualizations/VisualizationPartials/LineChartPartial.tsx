@@ -2,10 +2,12 @@ import React, { useMemo } from 'react'
 import { scaleLinear } from 'd3-scale'
 import { min, max } from 'd3-array'
 import { path } from 'd3-path'
+import { getColorByKey } from '../../../../style/theme'
 
 interface LineChartPartialProps {
   w: number
   h: number
+  label: string
   values: number[]
 }
 
@@ -45,7 +47,7 @@ const LineChartPartial: React.FC<LineChartPartialProps> = (props) => {
   return (
     <g>
       <path d={grid(path())} fill='none' stroke='lightgrey' />
-      <path d={line(path())} fill='none' stroke='blue' />
+      <path d={line(path())} fill='none' stroke={getColorByKey(props.label)} strokeWidth={2} />
     </g>
   )
 }

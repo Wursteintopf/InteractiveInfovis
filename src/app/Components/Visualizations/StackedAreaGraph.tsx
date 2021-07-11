@@ -6,6 +6,7 @@ import { scaleLinear, scaleBand, scaleOrdinal } from 'd3-scale'
 import { max, merge } from 'd3-array'
 import bezierSpline from '@freder/bezier-spline'
 import { path } from 'd3-path'
+import { getColorByKey } from '../../../style/theme'
 
 interface StackedAreaGraphProps {
   groups: Group[]
@@ -75,11 +76,11 @@ const StackedAreaGraph: React.FC<StackedAreaGraphProps> = (props) => {
     <svg width={props.w} height={props.h} style={{ padding: props.pad }}>
       {/** Income Data above axis **/}
       {
-        stackedIncome.map((type, index) => <path key={index} d={area(path(), type, 'inc')} fill={incomeColor(index)} />)
+        stackedIncome.map((type, index) => <path key={index} d={area(path(), type, 'inc')} fill={getColorByKey(type.key)} />)
       }
       {/** Expenditure Data below axis **/}
       {
-        stackedExpenditure.map((type, index) => <path key={index} d={area(path(), type, 'exp')} fill={expenditureColor(index)} />)
+        stackedExpenditure.map((type, index) => <path key={index} d={area(path(), type, 'exp')} fill={getColorByKey(type.key)} />)
       }
       {/** X Axis **/}
       <g>

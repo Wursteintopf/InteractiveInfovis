@@ -30,7 +30,7 @@ const StarPlot:React.FC<StarPlotProps> = props => {
   const tickOffset = radius / scaleTicks.length
 
   const color = useMemo(() => {
-    return scaleOrdinal().domain(axes).range(['#e41a1c', '#377eb8', '#4daf4a', '#ff00ff', '#ffff00'])
+    return scaleOrdinal().domain(axes).range(['#1487C2', '#28BCCA', '#C9D93B', '#FEA82A', '#D08AC0'])
   }, [])
 
   return (
@@ -43,7 +43,7 @@ const StarPlot:React.FC<StarPlotProps> = props => {
 
             return (
               <g key={index}>
-                <path d={'M 0 0 L ' + coords[0] + ' ' + coords[1]} stroke='black' />
+                <path d={'M 0 0 L ' + coords[0] + ' ' + coords[1]} stroke='lightgrey' />
                 <text transform={'translate(' + coords[0] + ',' + coords[1] + ')'} style={{ fontSize: 12 }} textAnchor='middle'>{axe}</text>
               </g>
             )
@@ -58,7 +58,7 @@ const StarPlot:React.FC<StarPlotProps> = props => {
             })
             pathString += coordList[0][0] + ' ' + coordList[0][1]
 
-            return <path key={index} d={pathString} stroke='grey' fill='none' />
+            return <path key={index} d={pathString} stroke='lightgrey' fill='none' />
           })
         }
       </g>
