@@ -19,7 +19,7 @@ const LineChart: React.FC<LineChartProps> = (props) => {
   const chartWidth = boxWidth - spacingRight - spacingLeft
   const chartHeight = props.h - 2 * props.pad - spacingTop - spacingBottom
 
-  const unwantedKeys = ['label', 'Differenz zu Brutto', 'Sonstige Einnahmen']
+  const unwantedKeys = ['label', 'Differenz zu Brutto', 'Sonstige Einnahmen', 'Erfasste Haushalte']
 
   const segmentHeight = chartHeight / Object.keys(props.groups[0]).filter(e => !unwantedKeys.includes(e)).length
 

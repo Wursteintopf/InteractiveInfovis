@@ -30,7 +30,6 @@ const StackedBarChart: React.FC<StackedBarChartProps> = props => {
   }, [props.groups])
 
   const xOffSet = chartWidth / labels.length
-  const yOffSet = chartHeight / yTicks.length
 
   const stackedIncome = useSelector(getStackedIncomeData)
   const stackedExpenditure = useSelector(getStackedExpenditureData)
@@ -49,9 +48,9 @@ const StackedBarChart: React.FC<StackedBarChartProps> = props => {
       <g>
         <path d={'M ' + spacingLeft + ' 0 V ' + chartHeight} stroke='black' />
         {
-          yTicks.reverse().map((tick, index) => {
+          yTicks.map((tick, index) => {
             return (
-              <g key={index} transform={'translate(' + (spacingLeft - 7) + ',' + (index + 1) * yOffSet + ')'}>
+              <g key={index} transform={'translate(' + (spacingLeft - 7) + ',' + (chartHeight - y(tick)) + ')'}>
                 <text transform='translate(-38,5)'>{tick}</text>
                 <line x2='7' stroke='black' />
               </g>
