@@ -10,6 +10,7 @@ import { setFlattenedBy } from '../../store/ui/ui.actions'
 import PieChart from '../Components/Visualizations/PieChart'
 import LineChart from '../Components/Visualizations/LineChart'
 import StackedAreaGraph from '../Components/Visualizations/StackedAreaGraph'
+import BoxPlot from '../Components/Visualizations/BoxPlot'
 
 const Screen3: React.FC = () => {
   const dispatch = useDispatch()
@@ -31,7 +32,7 @@ const Screen3: React.FC = () => {
           <StarPlot groups={flattenedData} w={600} size={400} pad={10} />
         </UpperRight>
         <BottomRight>
-          <LineChart w={700} h={400} groups={flattenedData} pad={10} />
+          <BoxPlot w={700} h={400} groups={flattenedData} pad={10} />
           <div style={{ marginLeft: 80, marginTop: 0 }}>
             Flattened By Year <Switch
               color='default'
