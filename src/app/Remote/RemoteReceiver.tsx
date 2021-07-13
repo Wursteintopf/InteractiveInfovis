@@ -1,6 +1,12 @@
 import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
-import { changeScreen, resetUiState, setFlattenedBy } from '../../store/ui/ui.actions'
+import {
+  changeScreen,
+  resetUiState,
+  setFlattenedBy,
+  setSelectedHouseholdSize,
+  setSelectedYear,
+} from '../../store/ui/ui.actions'
 
 const RemoteReceiver: React.FC = () => {
   const channel = new BroadcastChannel('remote')
@@ -8,21 +14,25 @@ const RemoteReceiver: React.FC = () => {
 
   useEffect(() => {
     channel.addEventListener('message', message => {
-      switch (message.data) {
+      switch (message.data.command) {
         case 'resetUiState':
-          dispatch(resetUiState())
+          dispatch(resetUiState)
           break
-        case 'setFlattenedByHousehold':
-          dispatch(setFlattenedBy('household'))
+
+        case 'setFlattenedBy':
+          dispatch(setFlattenedBy(message.data.payload))
           break
-        case 'setFlattenedByYear':
-          dispatch(setFlattenedBy('year'))
+
+        case 'changeScreen':
+          dispatch(changeScreen(message.data.payload))
           break
-        case 'switchToScreen1':
-          dispatch(changeScreen(1))
+
+        case 'setSelectedYear':
+          dispatch(setSelectedYear(message.data.payload))
           break
-        case 'switchToScreen2':
-          dispatch(changeScreen(2))
+
+        case 'setSelectedHouseholdSize':
+          dispatch(setSelectedHouseholdSize(message.data.payload))
           break
       }
     })

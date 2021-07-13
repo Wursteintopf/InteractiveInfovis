@@ -10,7 +10,9 @@ const Remote: React.FC = () => {
   const channel = new BroadcastChannel('remote')
 
   useEffect(() => {
-    channel.postMessage('resetUiState')
+    channel.postMessage({
+      command: 'resetUiState',
+    })
   }, [])
 
   return (

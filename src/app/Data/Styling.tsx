@@ -19,6 +19,13 @@ export const HeaderArea = styled.div`
 
 export const Header = styled.h1`
   font-weight: 300;
+  margin: 0;
+`
+
+export const SubHeader = styled.h2`
+  font-weight: 300;
+  font-size: 20px;
+  margin: 0;
 `
 
 export const RoseChartArea = styled.div`
@@ -37,6 +44,11 @@ export const LineChartArea = styled.div`
 `
 
 export const StarPlotArea = styled.div`
+  grid-column: 4 / 6;
+  grid-row: 6 / 9;
+`
+
+export const BoxPlotArea = styled.div`
   grid-column: 4 / 6;
   grid-row: 6 / 9;
 `

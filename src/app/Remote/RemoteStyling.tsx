@@ -42,6 +42,7 @@ export const HomeScreen = styled.div`
   background: white;
   border-radius: 10px;
   padding: 20px;
+  overflow-y: auto;
 `
 
 export const RemoteHeader = styled.h2`

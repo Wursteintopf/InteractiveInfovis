@@ -1,14 +1,60 @@
 import React from 'react'
-import { Header, HeaderArea, ScreenLayout } from '../Styling'
+import {
+  BoxPlotArea,
+  Header,
+  HeaderArea,
+  LineChartArea,
+  ScreenLayout,
+  StackedAreaGraphArea,
+  StackedBarChartArea,
+  SubHeader,
+} from '../Styling'
+import { useSelector } from 'react-redux'
+import { getFlattenedBy, getSelectedHouseholdSize, getSelectedYear } from '../../../store/ui/ui.selectors'
+import { getFlattenedData } from '../../../store/data/data.selectors'
+import { max } from 'd3-array'
+import LineChart from '../../Components/Visualizations/LineChart'
+import StackedAreaGraph from '../../Components/Visualizations/StackedAreaGraph'
+import StackedBarChart from '../../Components/Visualizations/StackedBarChart'
+import BoxPlot from '../../Components/Visualizations/BoxPlot'
 
 const DataScreen2: React.FC = () => {
+  const flattenedBy = useSelector(getFlattenedBy)
+  const flattenedData = useSelector(getFlattenedData)
+
+  const houseHoldSize = useSelector(getSelectedHouseholdSize)
+  const year = useSelector(getSelectedYear)
+
+  const columnWidth = (max([document.documentElement.clientWidth || 0, window.innerWidth || 0]) - 40) / 6
+  const rowHeight = (max([document.documentElement.clientHeight || 0, window.innerHeight || 0]) - 140) / 6
+
   return (
     <ScreenLayout>
       <HeaderArea>
         <Header>
-          Hier entsteht dann Screen 2
+          Income and Expenditure in Germany
         </Header>
+        <SubHeader>
+          {flattenedBy === 'year' ? 'Selected Year: ' + year : 'Household with ' + houseHoldSize + ' persons'}
+        </SubHeader>
       </HeaderArea>
+
+      <LineChartArea>
+        <LineChart w={columnWidth * 2} h={rowHeight * 6} groups={flattenedData} pad={20} />
+      </LineChartArea>
+
+      <StackedAreaGraphArea>
+        <StackedAreaGraph groups={flattenedData} w={columnWidth * 2} h={rowHeight * 2} pad={20} />
+      </StackedAreaGraphArea>
+
+      <StackedBarChartArea>
+        <StackedBarChart groups={flattenedData} w={columnWidth * 2} h={rowHeight * 3} pad={20} />
+      </StackedBarChartArea>
+
+      <BoxPlotArea>
+        <BoxPlot w={columnWidth * 2} h={rowHeight * 3} pad={20} groups={flattenedData} />
+      </BoxPlotArea>
+
     </ScreenLayout>
   )
 }

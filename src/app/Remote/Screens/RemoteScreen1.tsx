@@ -1,9 +1,10 @@
 import React from 'react'
 import { BlockWrapper, RemoteButton, RemoteHeader } from '../RemoteStyling'
 import Switch from '@material-ui/core/Switch'
-import { changeScreen, setFlattenedBy } from '../../../store/ui/ui.actions'
+import { changeScreen, setFlattenedBy, setSelectedHouseholdSize, setSelectedYear } from '../../../store/ui/ui.actions'
 import { useDispatch, useSelector } from 'react-redux'
 import { getFlattenedBy } from '../../../store/ui/ui.selectors'
+import { householdSize, year } from '../../../store/ui/ui.interfaces'
 
 interface RemoteProps {
   channel: BroadcastChannel
@@ -15,12 +16,20 @@ const RemoteScreen1: React.FC<RemoteProps> = (props) => {
 
   const buildButtons = () => {
     if (flattenedBy === 'year') {
-      return ['2014', '2015', '2016', '2017', '2019'].map((year, index) => {
+      return [2014, 2015, 2016, 2017, 2019].map((year, index) => {
         return (
           <RemoteButton
             onClick={() => {
-              props.channel.postMessage('switchToScreen2')
+              props.channel.postMessage({
+                command: 'setSelectedYear',
+                payload: year,
+              })
+              props.channel.postMessage({
+                command: 'changeScreen',
+                payload: 2,
+              })
               dispatch(changeScreen(2))
+              dispatch(setSelectedYear(year as year))
             }}
             key={index}
           >
@@ -29,16 +38,24 @@ const RemoteScreen1: React.FC<RemoteProps> = (props) => {
         )
       })
     } else {
-      return ['Haushalt mit 1 Person', 'Haushalt mit 2 Personen', 'Haushalt mit 3 Personen', 'Haushalt mit 4 Personen', 'Haushalt mit 5 und mehr Personen'].map((size, index) => {
+      return [1, 2, 3, 4, 5].map((size, index) => {
         return (
           <RemoteButton
             onClick={() => {
-              props.channel.postMessage('switchToScreen2')
+              props.channel.postMessage({
+                command: 'setSelectedHouseholdSize',
+                payload: size,
+              })
+              props.channel.postMessage({
+                command: 'changeScreen',
+                payload: 2,
+              })
               dispatch(changeScreen(2))
+              dispatch(setSelectedHouseholdSize(size as householdSize))
             }}
             key={index}
           >
-            {size}
+            Haushalt mit {size} {size === 5 ? 'und mehr' : ''} Person{size !== 1 ? 'en' : ''}
           </RemoteButton>
         )
       })
@@ -55,10 +72,16 @@ const RemoteScreen1: React.FC<RemoteProps> = (props) => {
           checked={flattenedBy === 'household'}
           onChange={() => {
             if (flattenedBy === 'year') {
-              props.channel.postMessage('setFlattenedByHousehold')
+              props.channel.postMessage({
+                command: 'setFlattenedBy',
+                payload: 'household',
+              })
               dispatch(setFlattenedBy('household'))
             } else {
-              props.channel.postMessage('setFlattenedByYear')
+              props.channel.postMessage({
+                command: 'setFlattenedBy',
+                payload: 'year',
+              })
               dispatch(setFlattenedBy('year'))
             }
           }}

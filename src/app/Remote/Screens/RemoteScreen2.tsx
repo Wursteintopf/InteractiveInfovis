@@ -17,7 +17,10 @@ const RemoteScreen2: React.FC<RemoteProps> = (props) => {
         <BackButton
           onClick={() => {
             dispatch(changeScreen(1))
-            props.channel.postMessage('switchToScreen1')
+            props.channel.postMessage({
+              command: 'changeScreen',
+              payload: 1,
+            })
           }}
         >
           Back To Overview

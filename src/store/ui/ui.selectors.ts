@@ -25,5 +25,5 @@ export const getSelectedHouseholdSize = createSelector(
 
 export const getCurrentScreen = createSelector(
   selectUiState,
-  state => state.currentScreen
+  state => state.currentScreen,
 )

@@ -2,6 +2,7 @@ import { createSelector } from 'reselect'
 import { RootState } from '../root.reducer'
 import { stack } from 'd3-shape'
 import { Group } from './data.interfaces'
+import { getHouseholdSizeFromInt } from '../../util/DataUtil'
 
 const incomeKeys = ['Haushaltsnettoeinkommen', 'Differenz zu Brutto', 'Sonstige Einnahmen']
 const expenditureKeys = ['Private Konsumausgaben', 'Andere Ausgaben']
@@ -13,7 +14,7 @@ export const getFullData = createSelector(
   state => state.Data,
 )
 
-const flattenByHousehold = (data) => {
+const averageByHousehold = (data): Group[] => {
   let flattened: Group[] = []
   Object.keys(data).forEach(key => {
     Object.keys(data[key]).forEach(key2 => {
@@ -65,7 +66,7 @@ const flattenByHousehold = (data) => {
   })
 }
 
-const flattenedByYear = (data) => {
+const averageByYear = (data): Group[] => {
   return Object.keys(data).map(key => {
     return {
       label: key,
@@ -81,13 +82,53 @@ const flattenedByYear = (data) => {
   })
 }
 
+const specificYear = (data, year): Group[] => {
+  return Object.keys(data[year]).filter(e => e !== 'Insgesamt').map(key => {
+    console.log(key)
+    return {
+      label: key.replace('Haushalt mit ', ''),
+      'Erfasste Haushalte': data[year][key]['Erfasste Haushalte'],
+      Haushaltsbruttoeinkommen: data[year][key].Haushaltsbruttoeinkommen,
+      Haushaltsnettoeinkommen: data[year][key].Haushaltsnettoeinkommen,
+      'Ausgabefaehige Einkommen und Einnahmen': data[year][key]['Ausgabefaehige Einkommen und Einnahmen'],
+      'Differenz zu Brutto': data[year][key]['Differenz zu Brutto'],
+      'Sonstige Einnahmen': data[year][key]['Sonstige Einnahmen'],
+      'Private Konsumausgaben': data[year][key]['Private Konsumausgaben'],
+      'Andere Ausgaben': data[year][key]['Andere Ausgaben'],
+    }
+  })
+}
+
+const specificHousehold = (data, household): Group[] => {
+  const householdSize = getHouseholdSizeFromInt(household)
+  return Object.keys(data).map(key => {
+    return {
+      label: key,
+      'Erfasste Haushalte': data[key][householdSize]['Erfasste Haushalte'],
+      Haushaltsbruttoeinkommen: data[key][householdSize].Haushaltsbruttoeinkommen,
+      Haushaltsnettoeinkommen: data[key][householdSize].Haushaltsnettoeinkommen,
+      'Ausgabefaehige Einkommen und Einnahmen': data[key][householdSize]['Ausgabefaehige Einkommen und Einnahmen'],
+      'Differenz zu Brutto': data[key][householdSize]['Differenz zu Brutto'],
+      'Sonstige Einnahmen': data[key][householdSize]['Sonstige Einnahmen'],
+      'Private Konsumausgaben': data[key][householdSize]['Private Konsumausgaben'],
+      'Andere Ausgaben': data[key][householdSize]['Andere Ausgaben'],
+    }
+  })
+}
+
 export const getFlattenedData = createSelector(
   state,
   state => {
     const flattenedBy = state.Ui.flattenBy
-
-    if (flattenedBy === 'year') return flattenedByYear(state.Data)
-    else return flattenByHousehold(state.Data)
+    const currentScreen = state.Ui.currentScreen
+    const selectedYear = state.Ui.selectedYear
+    const selectedHouseholdSize = state.Ui.selectedHouseholdSize
+    
+    if (currentScreen === 1 && flattenedBy === 'year') return averageByYear(state.Data)
+    else if (currentScreen === 1 && flattenedBy === 'household') return averageByHousehold(state.Data)
+    else if (currentScreen === 2 && flattenedBy === 'year') return specificYear(state.Data, selectedYear)
+    else if (currentScreen === 2 && flattenedBy === 'household') return specificHousehold(state.Data, selectedHouseholdSize)
+    else return []
   },
 )
 
