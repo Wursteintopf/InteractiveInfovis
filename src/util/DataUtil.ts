@@ -1,3 +1,5 @@
+import { attribute } from '../store/ui/ui.interfaces'
+
 export const getHouseholdSizeFromInt = (int: number): string => {
   switch (int) {
     case 1:
@@ -12,4 +14,14 @@ export const getHouseholdSizeFromInt = (int: number): string => {
       return 'Haushalt mit 5 und mehr Personen'
   }
   return ''
+}
+
+export const getAttributeFromString = (key: string): attribute => {
+  if (key === 'Differenz zu Brutto') {
+    return 'Haushaltsbruttoeinkommen'
+  } else if (key === 'Sonstige Einnahmen') {
+    return 'Ausgabefaehige Einkommen und Einnahmen'
+  } else {
+    return key as attribute
+  }
 }

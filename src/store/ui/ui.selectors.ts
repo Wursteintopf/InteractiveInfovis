@@ -27,3 +27,13 @@ export const getCurrentScreen = createSelector(
   selectUiState,
   state => state.currentScreen,
 )
+
+export const getHighlightedAttributes = createSelector(
+  selectUiState,
+  state => state.highlights,
+)
+
+export const getChannel = createSelector(
+  selectUiState,
+  state => state.channel,
+)

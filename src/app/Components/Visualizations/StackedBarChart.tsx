@@ -4,7 +4,10 @@ import { max, merge } from 'd3-array'
 import { useSelector } from 'react-redux'
 import { getStackedExpenditureData, getStackedIncomeData } from '../../../store/data/data.selectors'
 import { Group } from '../../../store/data/data.interfaces'
-import { getColorByKey } from '../../../style/theme'
+import { getColorByKey, getMutedColorByKey } from '../../../style/theme'
+import { getHighlightedAttributes } from '../../../store/ui/ui.selectors'
+import { attribute } from '../../../store/ui/ui.interfaces'
+import { getAttributeFromString } from '../../../util/DataUtil'
 
 interface StackedBarChartProps {
   groups: Group[]
@@ -14,6 +17,13 @@ interface StackedBarChartProps {
 }
 
 const StackedBarChart: React.FC<StackedBarChartProps> = props => {
+  const highlighted = useSelector(getHighlightedAttributes)
+
+  const color = (key: attribute) => {
+    if (highlighted.includes(key) || highlighted.length === 0) return getColorByKey(key)
+    else return getMutedColorByKey(key)
+  }
+
   const labels = props.groups.map(group => group.label)
 
   const spacingLeft = 45
@@ -68,7 +78,7 @@ const StackedBarChart: React.FC<StackedBarChartProps> = props => {
       {
         stackedIncome.map((type, index) => {
           return (
-            <g key={index} fill={getColorByKey(type.key)}>
+            <g key={index} fill={color(getAttributeFromString(type.key))}>
               {
                 type.map((rect, index) => {
                   const height = y(rect[1]) - y(rect[0])
@@ -85,7 +95,7 @@ const StackedBarChart: React.FC<StackedBarChartProps> = props => {
       {
         stackedExpenditure.map((type, index) => {
           return (
-            <g key={index} fill={getColorByKey(type.key)}>
+            <g key={index} fill={color(getAttributeFromString(type.key))}>
               {
                 type.map((rect, index) => {
                   const height = y(rect[1]) - y(rect[0])

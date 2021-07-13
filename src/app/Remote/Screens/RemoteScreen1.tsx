@@ -3,16 +3,14 @@ import { BlockWrapper, RemoteButton, RemoteHeader } from '../RemoteStyling'
 import Switch from '@material-ui/core/Switch'
 import { changeScreen, setFlattenedBy, setSelectedHouseholdSize, setSelectedYear } from '../../../store/ui/ui.actions'
 import { useDispatch, useSelector } from 'react-redux'
-import { getFlattenedBy } from '../../../store/ui/ui.selectors'
+import { getChannel, getFlattenedBy } from '../../../store/ui/ui.selectors'
 import { householdSize, year } from '../../../store/ui/ui.interfaces'
+import HighlightToggles from './HighlightToggles'
 
-interface RemoteProps {
-  channel: BroadcastChannel
-}
-
-const RemoteScreen1: React.FC<RemoteProps> = (props) => {
+const RemoteScreen1: React.FC = () => {
   const dispatch = useDispatch()
   const flattenedBy = useSelector(getFlattenedBy)
+  const channel = useSelector(getChannel)
 
   const buildButtons = () => {
     if (flattenedBy === 'year') {
@@ -20,11 +18,11 @@ const RemoteScreen1: React.FC<RemoteProps> = (props) => {
         return (
           <RemoteButton
             onClick={() => {
-              props.channel.postMessage({
+              channel.postMessage({
                 command: 'setSelectedYear',
                 payload: year,
               })
-              props.channel.postMessage({
+              channel.postMessage({
                 command: 'changeScreen',
                 payload: 2,
               })
@@ -42,11 +40,11 @@ const RemoteScreen1: React.FC<RemoteProps> = (props) => {
         return (
           <RemoteButton
             onClick={() => {
-              props.channel.postMessage({
+              channel.postMessage({
                 command: 'setSelectedHouseholdSize',
                 payload: size,
               })
-              props.channel.postMessage({
+              channel.postMessage({
                 command: 'changeScreen',
                 payload: 2,
               })
@@ -72,13 +70,13 @@ const RemoteScreen1: React.FC<RemoteProps> = (props) => {
           checked={flattenedBy === 'household'}
           onChange={() => {
             if (flattenedBy === 'year') {
-              props.channel.postMessage({
+              channel.postMessage({
                 command: 'setFlattenedBy',
                 payload: 'household',
               })
               dispatch(setFlattenedBy('household'))
             } else {
-              props.channel.postMessage({
+              channel.postMessage({
                 command: 'setFlattenedBy',
                 payload: 'year',
               })
@@ -93,6 +91,7 @@ const RemoteScreen1: React.FC<RemoteProps> = (props) => {
           {buildButtons()}
         </div>
       </BlockWrapper>
+      <HighlightToggles />
     </div>
   )
 }

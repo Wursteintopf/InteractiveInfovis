@@ -5,8 +5,11 @@ import { useSelector } from 'react-redux'
 import { getStackedExpenditureData, getStackedIncomeData } from '../../../store/data/data.selectors'
 import { Group } from '../../../store/data/data.interfaces'
 import { convertAngleAndLengthToCoordinates } from '../../../util/MathUtil'
-import { getColorByKey } from '../../../style/theme'
+import { getColorByKey, getMutedColorByKey } from '../../../style/theme'
 import { path } from 'd3-path'
+import { getHighlightedAttributes } from '../../../store/ui/ui.selectors'
+import { attribute } from '../../../store/ui/ui.interfaces'
+import { getAttributeFromString } from '../../../util/DataUtil'
 
 export interface PieChartProps {
   groups: Group[]
@@ -16,6 +19,13 @@ export interface PieChartProps {
 }
 
 const NightingaleRoseChart: React.FC<PieChartProps> = (props) => {
+  const highlighted = useSelector(getHighlightedAttributes)
+
+  const color = (key: attribute) => {
+    if (highlighted.includes(key) || highlighted.length === 0) return getColorByKey(key)
+    else return getMutedColorByKey(key)
+  }
+
   const labels = props.groups.map(group => group.label)
   const chartSize = (props.size - (2 * props.pad))
   const radius = chartSize / 2
@@ -65,7 +75,7 @@ const NightingaleRoseChart: React.FC<PieChartProps> = (props) => {
                   const a2 = rotationScale(angle)
                   angle += inc.data['Erfasste Haushalte'] / 2
 
-                  return <path key={index2} d={arcPath(scale(inc[0]), scale(inc[1]), a1, a2)} fill={getColorByKey(type.key)} />
+                  return <path key={index2} d={arcPath(scale(inc[0]), scale(inc[1]), a1, a2)} fill={color(getAttributeFromString(type.key))} />
                 })
               }
             </g>
@@ -88,7 +98,7 @@ const NightingaleRoseChart: React.FC<PieChartProps> = (props) => {
 
                   return (
                     <g key={index2}>
-                      <path d={arcPath(scale(inc[0]), scale(inc[1]), a1, a2)} fill={getColorByKey(type.key)} />
+                      <path d={arcPath(scale(inc[0]), scale(inc[1]), a1, a2)} fill={color(getAttributeFromString(type.key))} />
                       <path d={separator(path(), a2)} stroke='white' strokeWidth={5} />
                       {index === 1 ? <text transform={'translate(' + x + ',' + y + ')'} textAnchor='middle' style={{ fontSize: 12 }}>{labels[index2]}</text> : ''}
                     </g>

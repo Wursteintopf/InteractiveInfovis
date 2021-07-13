@@ -94,3 +94,9 @@ export const BackButton = styled.div`
     margin-right: 10px;
   }
 `
+
+export const CheckBoxWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+`

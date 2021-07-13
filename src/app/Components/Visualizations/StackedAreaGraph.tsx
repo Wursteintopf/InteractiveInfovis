@@ -6,7 +6,10 @@ import { scaleLinear, scaleBand, scaleOrdinal } from 'd3-scale'
 import { max, merge } from 'd3-array'
 import bezierSpline from '@freder/bezier-spline'
 import { path } from 'd3-path'
-import { getColorByKey } from '../../../style/theme'
+import { getColorByKey, getMutedColorByKey } from '../../../style/theme'
+import { getHighlightedAttributes } from '../../../store/ui/ui.selectors'
+import { attribute } from '../../../store/ui/ui.interfaces'
+import { getAttributeFromString } from '../../../util/DataUtil'
 
 interface StackedAreaGraphProps {
   groups: Group[]
@@ -16,6 +19,13 @@ interface StackedAreaGraphProps {
 }
 
 const StackedAreaGraph: React.FC<StackedAreaGraphProps> = (props) => {
+  const highlighted = useSelector(getHighlightedAttributes)
+
+  const color = (key: attribute) => {
+    if (highlighted.includes(key) || highlighted.length === 0) return getColorByKey(key)
+    else return getMutedColorByKey(key)
+  }
+
   const labels = props.groups.map(group => group.label)
 
   const stackedIncome = useSelector(getStackedIncomeData)
@@ -76,11 +86,11 @@ const StackedAreaGraph: React.FC<StackedAreaGraphProps> = (props) => {
     <svg width={props.w} height={props.h} style={{ padding: props.pad }}>
       {/** Income Data above axis **/}
       {
-        stackedIncome.map((type, index) => <path key={index} d={area(path(), type, 'inc')} fill={getColorByKey(type.key)} />)
+        stackedIncome.map((type, index) => <path key={index} d={area(path(), type, 'inc')} fill={color(getAttributeFromString(type.key))} />)
       }
       {/** Expenditure Data below axis **/}
       {
-        stackedExpenditure.map((type, index) => <path key={index} d={area(path(), type, 'exp')} fill={getColorByKey(type.key)} />)
+        stackedExpenditure.map((type, index) => <path key={index} d={area(path(), type, 'exp')} fill={color(getAttributeFromString(type.key))} />)
       }
       {/** X Axis **/}
       <g>

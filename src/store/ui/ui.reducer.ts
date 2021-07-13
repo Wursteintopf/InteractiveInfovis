@@ -1,12 +1,21 @@
 import { reducerWithInitialState } from 'typescript-fsa-reducers'
 import { UiState } from './ui.interfaces'
-import { changeScreen, resetUiState, setFlattenedBy, setSelectedHouseholdSize, setSelectedYear } from './ui.actions'
+import {
+  toggleHighlightedAttribute,
+  changeScreen,
+  resetUiState,
+  setFlattenedBy,
+  setSelectedHouseholdSize,
+  setSelectedYear,
+} from './ui.actions'
 
 const INITIAL_STATE: UiState = {
   flattenBy: 'year',
   selectedHouseholdSize: 1,
   selectedYear: 2014,
   currentScreen: 1,
+  highlights: [],
+  channel: new BroadcastChannel('remote'),
 }
 
 export const UiReducer = reducerWithInitialState(INITIAL_STATE)
@@ -33,5 +42,18 @@ export const UiReducer = reducerWithInitialState(INITIAL_STATE)
     return {
       ...state,
       currentScreen: payload,
+    }
+  })
+  .case(toggleHighlightedAttribute, (state, payload) => {
+    if (state.highlights.includes(payload)) {
+      return {
+        ...state,
+        highlights: state.highlights.filter(e => e !== payload),
+      }
+    } else {
+      return {
+        ...state,
+        highlights: [...state.highlights, payload],
+      }
     }
   })

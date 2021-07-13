@@ -2,7 +2,11 @@ import React, { useMemo } from 'react'
 import { scaleLinear } from 'd3-scale'
 import { max, min, quantile } from 'd3-array'
 import { path } from 'd3-path'
-import { getColorByKey } from '../../../../style/theme'
+import { getColorByKey, getMutedColorByKey } from '../../../../style/theme'
+import { useSelector } from 'react-redux'
+import { getHighlightedAttributes } from '../../../../store/ui/ui.selectors'
+import { attribute } from '../../../../store/ui/ui.interfaces'
+import { getAttributeFromString } from '../../../../util/DataUtil'
 
 interface BoxPlotPartialProps {
   w: number
@@ -14,6 +18,13 @@ interface BoxPlotPartialProps {
 }
 
 const BoxPlotPartial: React.FC<BoxPlotPartialProps> = (props) => {
+  const highlighted = useSelector(getHighlightedAttributes)
+
+  const color = (key: attribute) => {
+    if (highlighted.includes(key) || highlighted.length === 0) return getColorByKey(key)
+    else return getMutedColorByKey(key)
+  }
+
   const spacingTopBottom = 20
 
   const x = useMemo(() => {
@@ -53,7 +64,7 @@ const BoxPlotPartial: React.FC<BoxPlotPartialProps> = (props) => {
 
   return (
     <g>
-      <path d={drawBoxplot(path())} fill={getColorByKey(props.label)} stroke='black' />
+      <path d={drawBoxplot(path())} fill={color(getAttributeFromString(props.label))} stroke='black' />
     </g>
   )
 }

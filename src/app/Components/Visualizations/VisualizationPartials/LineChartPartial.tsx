@@ -2,7 +2,11 @@ import React, { useMemo } from 'react'
 import { scaleLinear } from 'd3-scale'
 import { min, max } from 'd3-array'
 import { path } from 'd3-path'
-import { getColorByKey } from '../../../../style/theme'
+import { getColorByKey, getMutedColorByKey } from '../../../../style/theme'
+import { useSelector } from 'react-redux'
+import { getHighlightedAttributes } from '../../../../store/ui/ui.selectors'
+import { attribute } from '../../../../store/ui/ui.interfaces'
+import { getAttributeFromString } from '../../../../util/DataUtil'
 
 interface LineChartPartialProps {
   w: number
@@ -12,9 +16,16 @@ interface LineChartPartialProps {
 }
 
 const LineChartPartial: React.FC<LineChartPartialProps> = (props) => {
+  const highlighted = useSelector(getHighlightedAttributes)
+
   const scale = useMemo(() => {
     return scaleLinear().domain([min(props.values), max(props.values)]).range([props.h, 0])
   }, [props.values])
+
+  const color = (key: attribute) => {
+    if (highlighted.includes(key) || highlighted.length === 0) return getColorByKey(key)
+    else return getMutedColorByKey(key)
+  }
   
   const xOffset = props.w / (props.values.length - 1)
 
@@ -47,7 +58,7 @@ const LineChartPartial: React.FC<LineChartPartialProps> = (props) => {
   return (
     <g>
       <path d={grid(path())} fill='none' stroke='lightgrey' />
-      <path d={line(path())} fill='none' stroke={getColorByKey(props.label)} strokeWidth={2} />
+      <path d={line(path())} fill='none' stroke={color(getAttributeFromString(props.label))} strokeWidth={2} />
     </g>
   )
 }

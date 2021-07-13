@@ -1,18 +1,23 @@
 import React, { useEffect } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import {
   changeScreen,
   resetUiState,
   setFlattenedBy,
   setSelectedHouseholdSize,
-  setSelectedYear,
+  setSelectedYear, toggleHighlightedAttribute,
 } from '../../store/ui/ui.actions'
+import { getChannel } from '../../store/ui/ui.selectors'
 
 const RemoteReceiver: React.FC = () => {
-  const channel = new BroadcastChannel('remote')
+  const channel = useSelector(getChannel)
   const dispatch = useDispatch()
 
   useEffect(() => {
+    channel.postMessage({
+      command: 'resetUiState',
+    })
+
     channel.addEventListener('message', message => {
       switch (message.data.command) {
         case 'resetUiState':
@@ -33,6 +38,10 @@ const RemoteReceiver: React.FC = () => {
 
         case 'setSelectedHouseholdSize':
           dispatch(setSelectedHouseholdSize(message.data.payload))
+          break
+
+        case 'toggleHighlightedAttribute':
+          dispatch(toggleHighlightedAttribute(message.data.payload))
           break
       }
     })
