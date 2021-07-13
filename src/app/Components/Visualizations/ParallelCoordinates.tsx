@@ -4,6 +4,7 @@ import { max, merge } from 'd3-array'
 import { useSelector } from 'react-redux'
 import { Group } from '../../../store/data/data.interfaces'
 import { getAllData } from '../../../store/data/data.selectors'
+import { path } from 'd3-path'
 
 
 
@@ -21,12 +22,12 @@ const ParallelCoordinates: React.FC<ParallelCoordinatesProps> = (props) => {
     const chartWidth = (props.w - (2 * props.pad) - spacingLeft)
     const chartHeight = (props.h - (2 * props.pad) - spacingBottom)
     const maxValue = max(merge(props.groups.map(group => [group.Haushaltsbruttoeinkommen, group.Haushaltsnettoeinkommen, group['Ausgabefaehige Einkommen und Einnahmen'], group['Private Konsumausgaben'], group['Andere Ausgaben']])))
-    const axes = ['Haushaltsbruttoeinkommen', 'Haushaltsnettoeinkommen', 'Ausgabefaehige Einkommen und Einnahmen', 'Private Konsumausgaben', 'Andere Ausgaben', 'Haushaltsgröße', 'Jahr']
+    const axes = ['Haushaltsbruttoeinkommen', 'Haushaltsnettoeinkommen', 'Ausgabefaehige Einkommen und Einnahmen', 'Private Konsumausgaben', 'Andere Ausgaben']
 
     const finance = useSelector(getAllData)
 
     const y = useMemo(() => {
-        return scaleLinear().domain([0, maxValue]).range([0, chartHeight])
+        return scaleLinear().domain([0, maxValue]).range([chartHeight, 0])
       }, [props.groups])
 
 
@@ -39,10 +40,6 @@ const ParallelCoordinates: React.FC<ParallelCoordinatesProps> = (props) => {
     const xOffSet = chartWidth / axes.length
     const yOffSet = chartHeight / yTicks.length
     
-    console.log("axes = " + axes);
-    console.log("Groups = " + props.groups)
-    console.log("Groups[0] = " + props.groups[0])
-    console.log("finance = " + finance)
 
     return (
 
@@ -76,20 +73,55 @@ const ParallelCoordinates: React.FC<ParallelCoordinatesProps> = (props) => {
             </g>
             {/** Values**/}
             <g>
-                {/**
+                {
                     props.groups.map((group, index) => {
-                        const coordList = axes.map((axe, index2) => ...)
-                        const height = y() - y()
-                        const yPos = chartHeight - height - y()
-                        let pathString = 'M '
-                        coordList.forEach(coord => {
-                            pathString += ... + ' ' + ...
-                        })
+
+                        console.log(group)
+
+                        const box = (context) => {
+                            axes.forEach( (axe, index) => {
+                                if (index === 0){
+                                    console.log(y(group[axe]))
+                                    context.moveTo((index + 1)* xOffSet, y(group[axe]))
+                                } else {
+                                    context.lineTo((index + 1) * xOffSet, y(group[axe]))
+                                }
+                            })
+
+                            return context
+                        }
 
 
-                        return <path key={index} d={pathString} strokeWidth={2}></path>
+                        return <path d={box(path())} fill='none' stroke='lightgrey'></path>
                     })
-                **/}
+            
+                
+                /**finance.map((type, index) => {
+                    console.log("finance[1] = " + finance[index])
+                    return (
+                        <g key={index}>
+                            {
+                                type.map((values, index) => {
+                                    console.log("values[0] = " + values[0])
+
+                                    const box = (context) => {
+                                        context.moveTo(0,0)
+                                        context.lineTo(props.w, 30)
+                                        context.lineTo(props.w, props.h)
+                                        context.lineTo(10, props.h)
+                                        context.lineTo(10, 30)
+
+                                        return context
+                                    }
+        
+                                    return <path d={box(path())} fill='none' stroke='lightgrey' />
+                                })
+                                
+                            }
+                        </g>
+                    )
+                        })**/
+                }
             </g>
         </svg>
 
