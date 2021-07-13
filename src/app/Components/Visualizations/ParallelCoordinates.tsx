@@ -2,9 +2,9 @@ import React, { useMemo, useRef } from 'react'
 import { scaleLinear, scaleOrdinal } from 'd3-scale'
 import { max, merge } from 'd3-array'
 import { useSelector } from 'react-redux'
-import { getStackedExpenditureData, getStackedIncomeData } from '../../../store/data/data.selectors'
 import { Group } from '../../../store/data/data.interfaces'
-import { Rotate90DegreesCcw } from '@material-ui/icons'
+import { getAllData } from '../../../store/data/data.selectors'
+
 
 
 interface  ParallelCoordinatesProps {
@@ -16,13 +16,14 @@ interface  ParallelCoordinatesProps {
 
 const ParallelCoordinates: React.FC<ParallelCoordinatesProps> = (props) => {
     const labels = props.groups.map(group => group.label)
-    const spacingLeft = 45
-    const spacingBottom = 50
+    const spacingLeft = 70
+    const spacingBottom = 70
     const chartWidth = (props.w - (2 * props.pad) - spacingLeft)
     const chartHeight = (props.h - (2 * props.pad) - spacingBottom)
     const maxValue = max(merge(props.groups.map(group => [group.Haushaltsbruttoeinkommen, group.Haushaltsnettoeinkommen, group['Ausgabefaehige Einkommen und Einnahmen'], group['Private Konsumausgaben'], group['Andere Ausgaben']])))
     const axes = ['Haushaltsbruttoeinkommen', 'Haushaltsnettoeinkommen', 'Ausgabefaehige Einkommen und Einnahmen', 'Private Konsumausgaben', 'Andere Ausgaben', 'Haushaltsgröße', 'Jahr']
 
+    const finance = useSelector(getAllData)
 
     const y = useMemo(() => {
         return scaleLinear().domain([0, maxValue]).range([0, chartHeight])
@@ -39,7 +40,9 @@ const ParallelCoordinates: React.FC<ParallelCoordinatesProps> = (props) => {
     const yOffSet = chartHeight / yTicks.length
     
     console.log("axes = " + axes);
-
+    console.log("Groups = " + props.groups)
+    console.log("Groups[0] = " + props.groups[0])
+    console.log("finance = " + finance)
 
     return (
 
@@ -64,14 +67,32 @@ const ParallelCoordinates: React.FC<ParallelCoordinatesProps> = (props) => {
                     
                     axes.map((axes, index) => {
                         return (
-                            <g key={index} transform={'translate(' + (spacingLeft + index * xOffSet) + ',' + (chartHeight + 20) + ')rotate(45)'} style={{ fontSize: 12 }}>
+                            <g key={index} transform={'translate(' + (spacingLeft + index * xOffSet) + ',' + (chartHeight + 20) + ')rotate(25)'} style={{ fontSize: 12 }}>
                                 <text>{axes}</text>
                             </g>
                         )
                     })
                 }
             </g>
+            {/** Values**/}
+            <g>
+                {/**
+                    props.groups.map((group, index) => {
+                        const coordList = axes.map((axe, index2) => ...)
+                        const height = y() - y()
+                        const yPos = chartHeight - height - y()
+                        let pathString = 'M '
+                        coordList.forEach(coord => {
+                            pathString += ... + ' ' + ...
+                        })
+
+
+                        return <path key={index} d={pathString} strokeWidth={2}></path>
+                    })
+                **/}
+            </g>
         </svg>
+
   );
 };
 
