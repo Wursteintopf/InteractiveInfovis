@@ -49,7 +49,7 @@ const DataScreen1: React.FC = () => {
       </StarPlotArea>
 
       <StackedBarChartArea>
-        <ParallelCoordinates groups={flattenedData} w={columnWidth * 2} h={rowHeight * 3} pad={20} />
+        <StackedBarChart groups={flattenedData} w={columnWidth * 2} h={rowHeight * 3} pad={20} />
       </StackedBarChartArea>
     </ScreenLayout>
   )
