@@ -16,6 +16,7 @@ import StackedAreaGraph from '../../Components/Visualizations/StackedAreaGraph'
 import LineChart from '../../Components/Visualizations/LineChart'
 import StarPlot from '../../Components/Visualizations/StarPlot'
 import StackedBarChart from '../../Components/Visualizations/StackedBarChart'
+import ParallelCoordinates from '../../Components/Visualizations/ParallelCoordinates'
 
 const DataScreen1: React.FC = () => {
   const flattenedData = useSelector(getFlattenedData)
@@ -48,7 +49,7 @@ const DataScreen1: React.FC = () => {
       </StarPlotArea>
 
       <StackedBarChartArea>
-        <StackedBarChart groups={flattenedData} w={columnWidth * 2} h={rowHeight * 3} pad={20} />
+        <ParallelCoordinates groups={flattenedData} w={columnWidth * 2} h={rowHeight * 3} pad={20} />
       </StackedBarChartArea>
     </ScreenLayout>
   )

@@ -6,6 +6,7 @@ import { getHouseholdSizeFromInt } from '../../util/DataUtil'
 
 const incomeKeys = ['Haushaltsnettoeinkommen', 'Differenz zu Brutto', 'Sonstige Einnahmen']
 const expenditureKeys = ['Private Konsumausgaben', 'Andere Ausgaben']
+const financeKeys = ['Haushaltsbruttoeinkommen', 'Haushaltsnettoeinkommen', 'Ausgabefaehige Einkommen und Einnahmen', 'Private Konsumausgaben', 'Andere Ausgaben']
 
 const state = (state: RootState) => state
 
@@ -144,4 +145,11 @@ export const getStackedExpenditureData = createSelector(
   state => {
     return stack().keys(expenditureKeys)(state)
   },
+)
+
+export const getAllData = createSelector(
+  getFlattenedData,
+  state => {
+    return stack().keys(financeKeys)(state)
+  }
 )
