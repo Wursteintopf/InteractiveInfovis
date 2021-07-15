@@ -3,7 +3,7 @@ import {
   BoxPlotArea,
   Header,
   HeaderArea,
-  LineChartArea,
+  LineChartArea, ParallelCoordinatesArea,
   ScreenLayout,
   StackedAreaGraphArea,
   StackedBarChartArea,
@@ -17,6 +17,7 @@ import LineChart from '../../Components/Visualizations/LineChart'
 import StackedAreaGraph from '../../Components/Visualizations/StackedAreaGraph'
 import StackedBarChart from '../../Components/Visualizations/StackedBarChart'
 import BoxPlot from '../../Components/Visualizations/BoxPlot'
+import ParallelCoordinates from '../../Components/Visualizations/ParallelCoordinates'
 
 const DataScreen2: React.FC = () => {
   const flattenedBy = useSelector(getFlattenedBy)
@@ -54,6 +55,10 @@ const DataScreen2: React.FC = () => {
       <BoxPlotArea>
         <BoxPlot w={columnWidth * 2} h={rowHeight * 3} pad={20} groups={flattenedData} />
       </BoxPlotArea>
+
+      <ParallelCoordinatesArea>
+        <ParallelCoordinates groups={flattenedData} w={columnWidth * 2} h={rowHeight * 4} pad={20} />
+      </ParallelCoordinatesArea>
 
     </ScreenLayout>
   )

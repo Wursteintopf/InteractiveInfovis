@@ -15,6 +15,7 @@ interface BoxPlotPartialProps {
   max: number
   values: number[]
   label: string
+  ticks: number[]
 }
 
 const BoxPlotPartial: React.FC<BoxPlotPartialProps> = (props) => {
@@ -36,6 +37,15 @@ const BoxPlotPartial: React.FC<BoxPlotPartialProps> = (props) => {
   const median = x(quantile(props.values, 0.5))
   const upperQuantile = x(quantile(props.values, 0.75))
   const maximum = x(max(props.values))
+
+  const drawTicks = (context) => {
+    props.ticks.forEach(tick => {
+      context.moveTo(x(tick), 0)
+      context.lineTo(x(tick), props.h)
+    })
+
+    return context
+  }
 
   const drawBoxplot = (context) => {
     context.moveTo(minimum, spacingTopBottom)
@@ -64,6 +74,7 @@ const BoxPlotPartial: React.FC<BoxPlotPartialProps> = (props) => {
 
   return (
     <g>
+      <path d={drawTicks(path())} fill='none' stroke='lightgrey' />
       <path d={drawBoxplot(path())} fill={color(getAttributeFromString(props.label))} stroke='black' />
     </g>
   )

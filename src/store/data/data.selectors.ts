@@ -84,7 +84,6 @@ const averageByYear = (data): Group[] => {
 
 const specificYear = (data, year): Group[] => {
   return Object.keys(data[year]).filter(e => e !== 'Insgesamt').map(key => {
-    console.log(key)
     return {
       label: key.replace('Haushalt mit ', ''),
       'Erfasste Haushalte': data[year][key]['Erfasste Haushalte'],

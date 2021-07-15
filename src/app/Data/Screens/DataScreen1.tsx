@@ -6,7 +6,7 @@ import {
   RoseChartArea,
   ScreenLayout,
   StackedAreaGraphArea, StackedBarChartArea,
-  StarPlotArea,
+  StarPlotArea, SubHeader,
 } from '../Styling'
 import NightingaleRoseChart from '../../Components/Visualizations/NightingaleRoseChart'
 import { useSelector } from 'react-redux'
@@ -17,9 +17,12 @@ import LineChart from '../../Components/Visualizations/LineChart'
 import StarPlot from '../../Components/Visualizations/StarPlot'
 import StackedBarChart from '../../Components/Visualizations/StackedBarChart'
 import ParallelCoordinates from '../../Components/Visualizations/ParallelCoordinates'
+import { getFlattenedBy } from '../../../store/ui/ui.selectors'
 
 const DataScreen1: React.FC = () => {
   const flattenedData = useSelector(getFlattenedData)
+
+  const flattenBy = useSelector(getFlattenedBy)
 
   const columnWidth = (max([document.documentElement.clientWidth || 0, window.innerWidth || 0]) - 40) / 6
   const rowHeight = (max([document.documentElement.clientHeight || 0, window.innerHeight || 0]) - 140) / 6
@@ -30,6 +33,9 @@ const DataScreen1: React.FC = () => {
         <Header>
           Income and Expenditure in Germany
         </Header>
+        <SubHeader>
+          Focus on {flattenBy === 'year' ? 'Year' : 'Householdsize'}
+        </SubHeader>
       </HeaderArea>
 
       <RoseChartArea>

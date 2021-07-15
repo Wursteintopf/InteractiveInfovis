@@ -16,10 +16,11 @@ interface LineChartPartialProps {
 }
 
 const LineChartPartial: React.FC<LineChartPartialProps> = (props) => {
+  const boxHeight = props.h - 10
   const highlighted = useSelector(getHighlightedAttributes)
 
   const scale = useMemo(() => {
-    return scaleLinear().domain([min(props.values), max(props.values)]).range([props.h, 0])
+    return scaleLinear().domain([min(props.values), max(props.values)]).range([boxHeight, 0])
   }, [props.values])
 
   const color = (key: attribute) => {
@@ -32,14 +33,14 @@ const LineChartPartial: React.FC<LineChartPartialProps> = (props) => {
   const grid = (context) => {
     context.moveTo(0, 0)
     context.lineTo(props.w, 0)
-    context.lineTo(props.w, props.h)
-    context.lineTo(0, props.h)
+    context.lineTo(props.w, boxHeight)
+    context.lineTo(0, boxHeight)
     context.lineTo(0, 0)
 
     props.values.forEach((value, index) => {
       if (index !== 0 && index !== props.values.length - 1) {
         context.moveTo(xOffset * index, 0)
-        context.lineTo(xOffset * index, props.h)
+        context.lineTo(xOffset * index, boxHeight)
       }
     })
 
@@ -55,10 +56,24 @@ const LineChartPartial: React.FC<LineChartPartialProps> = (props) => {
     return context
   }
 
+  const buildAxe = () => {
+    return (
+      <g>
+        <g transform={`translate(${props.w + 10},${scale(max(props.values)) + 12})`}>
+          <text fontSize={12}>{Math.floor(max(props.values))}€</text>
+        </g>
+        <g transform={`translate(${props.w + 10},${scale(min(props.values))})`}>
+          <text fontSize={12}>{Math.floor(min(props.values))}€</text>
+        </g>
+      </g>
+    )
+  }
+
   return (
     <g>
       <path d={grid(path())} fill='none' stroke='lightgrey' />
       <path d={line(path())} fill='none' stroke={color(getAttributeFromString(props.label))} strokeWidth={2} />
+      {buildAxe()}
     </g>
   )
 }

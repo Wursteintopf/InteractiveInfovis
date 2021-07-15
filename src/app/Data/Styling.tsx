@@ -33,6 +33,11 @@ export const RoseChartArea = styled.div`
   grid-row: 3 / 7;
 `
 
+export const ParallelCoordinatesArea = styled.div`
+  grid-column: 2 / 4;
+  grid-row: 3 / 7;
+`
+
 export const StackedAreaGraphArea = styled.div`
   grid-column: 2 / 4;
   grid-row: 7 / 9;

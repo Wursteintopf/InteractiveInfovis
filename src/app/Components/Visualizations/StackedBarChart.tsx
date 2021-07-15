@@ -47,33 +47,6 @@ const StackedBarChart: React.FC<StackedBarChartProps> = props => {
 
   return (
     <svg width={props.w} height={props.h} style={{ padding: props.pad }}>
-      {/** Y Axis **/}
-      <g>
-        <path d={'M ' + spacingLeft + ' 0 V ' + chartHeight} stroke='black' />
-        {
-          yTicks.map((tick, index) => {
-            return (
-              <g key={index} transform={'translate(' + (spacingLeft - 7) + ',' + (chartHeight - y(tick)) + ')'}>
-                <text transform='translate(-39,5)' style={{ fontSize: 12 }}>{tick}€</text>
-                <line x2='7' stroke='black' />
-              </g>
-            )
-          })
-        }
-      </g>
-      {/** X Axis **/}
-      <g>
-        <path d={'M ' + spacingLeft + ' ' + chartHeight + 'H ' + (chartWidth + spacingLeft)} stroke='black' />
-        {
-          labels.map((label, index) => {
-            return (
-              <g key={index} transform={'translate(' + (spacingLeft + index * xOffSet) + ',' + (chartHeight + 20) + ')'}>
-                <text style={{ fontSize: 12 }}>{label}</text>
-              </g>
-            )
-          })
-        }
-      </g>
       {/** Income **/}
       {
         stackedIncome.map((type, index) => {
@@ -108,6 +81,33 @@ const StackedBarChart: React.FC<StackedBarChartProps> = props => {
           )
         })
       }
+      {/** Y Axis **/}
+      <g>
+        <path d={'M ' + spacingLeft + ' 0 V ' + chartHeight} stroke='darkgrey' />
+        {
+          yTicks.map((tick, index) => {
+            return (
+              <g key={index} transform={'translate(' + (spacingLeft - 7) + ',' + (chartHeight - y(tick)) + ')'}>
+                <text transform='translate(-39,5)' style={{ fontSize: 12 }}>{tick}€</text>
+                <line x2='7' stroke='darkgrey' />
+              </g>
+            )
+          })
+        }
+      </g>
+      {/** X Axis **/}
+      <g>
+        <path d={'M ' + spacingLeft + ' ' + chartHeight + 'H ' + (chartWidth + spacingLeft)} stroke='darkgrey' />
+        {
+          labels.map((label, index) => {
+            return (
+              <g key={index} transform={'translate(' + (spacingLeft + index * xOffSet) + ',' + (chartHeight + 20) + ')'}>
+                <text style={{ fontSize: 12 }}>{label}</text>
+              </g>
+            )
+          })
+        }
+      </g>
     </svg>
   )
 }

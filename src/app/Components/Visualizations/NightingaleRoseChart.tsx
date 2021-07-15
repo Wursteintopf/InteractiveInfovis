@@ -63,6 +63,7 @@ const NightingaleRoseChart: React.FC<PieChartProps> = (props) => {
 
   return (
     <svg viewBox={-props.w / 2 + ' ' + -props.size / 2 + ' ' + props.w + ' ' + props.size} width={props.w} height={props.size} style={{ padding: props.pad }}>
+      {/** Income **/}
       {
         stackedIncome.map((type, index) => {
           let angle = 0
@@ -82,6 +83,7 @@ const NightingaleRoseChart: React.FC<PieChartProps> = (props) => {
           )
         })
       }
+      {/** Expenditure **/}
       {
         stackedExpenditure.map((type, index) => {
           let angle = 0
@@ -94,13 +96,13 @@ const NightingaleRoseChart: React.FC<PieChartProps> = (props) => {
                   angle += inc.data['Erfasste Haushalte'] / 2
                   const a2 = rotationScale(angle)
 
-                  const [x, y] = convertAngleAndLengthToCoordinates(a1, radius + 20)
+                  const [x, y] = convertAngleAndLengthToCoordinates(a1, scale(inc[1]) + 30)
 
                   return (
                     <g key={index2}>
                       <path d={arcPath(scale(inc[0]), scale(inc[1]), a1, a2)} fill={color(getAttributeFromString(type.key))} />
                       <path d={separator(path(), a2)} stroke='white' strokeWidth={5} />
-                      {index === 1 ? <text transform={'translate(' + x + ',' + y + ')'} textAnchor='middle' style={{ fontSize: 12 }}>{labels[index2]}</text> : ''}
+                      {index === 1 ? <text transform={'translate(' + x + ',' + y + ')'} textAnchor='middle' style={{ fontSize: 12 }}>{labels[index2].startsWith('5') ? labels[index2].substring(0, 10) : labels[index2]}</text> : ''}
                     </g>
                   )
                 })

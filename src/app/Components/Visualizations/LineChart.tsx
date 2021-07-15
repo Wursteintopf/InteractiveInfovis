@@ -12,7 +12,7 @@ interface LineChartProps {
 const LineChart: React.FC<LineChartProps> = (props) => {
   const spacingTop = 0
   const spacingLeft = 20
-  const spacingRight = 220
+  const spacingRight = 45
   const spacingBottom = 20
   const boxWidth = props.w - 2 * props.pad
 
@@ -34,7 +34,7 @@ const LineChart: React.FC<LineChartProps> = (props) => {
             return (
               <g key={index} transform={'translate(0,' + index * segmentHeight + ')'}>
                 <LineChartPartial label={key} w={chartWidth} h={chartHeight / Object.keys(props.groups[0]).filter(e => !unwantedKeys.includes(e)).length} values={props.groups.map(group => group[key])} />
-                <text style={{ fontSize: 11 }} transform={'translate(' + (chartWidth + 10) + ',30)'}>{key}</text>
+                <text style={{ fontSize: 11 }} transform={'translate(10,20)'}>{key}</text>
               </g>
             )
           })

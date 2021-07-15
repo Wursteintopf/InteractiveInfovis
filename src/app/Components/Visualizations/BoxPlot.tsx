@@ -41,13 +41,13 @@ const BoxPlot: React.FC<BoxPlotPartials> = (props) => {
     <svg width={props.w} height={props.h} style={{ padding: props.pad }}>
       {/** X Axis **/}
       <g transform={'translate(' + spacingLeft + ',' + (spacingTop + chartHeight) + ')'}>
-        <path d={'M 0 0 L ' + chartWidth + ' 0'} stroke='black' />
+        <path d={'M 0 0 L ' + chartWidth + ' 0'} stroke='darkgrey' />
         {
           xTicks.map((tick, index) => {
             return (
               <g key={index} transform={'translate(' + x(tick) + ',0)'}>
-                <line y2={10} stroke='black' />
-                <text style={{ fontSize: 12 }} transform='translate(0,23)' textAnchor='middle'>{tick}</text>
+                <line y2={10} stroke='darkgrey' />
+                <text style={{ fontSize: 12 }} transform='translate(0,23)' textAnchor='middle'>{tick}€</text>
               </g>
             )
           })
@@ -59,7 +59,7 @@ const BoxPlot: React.FC<BoxPlotPartials> = (props) => {
           Object.keys(props.groups[0]).filter(e => !unwantedKeys.includes(e)).map((key, index) => {
             return (
               <g key={index} transform={'translate(0,' + index * segmentHeight + ')'}>
-                <BoxPlotPartial label={key} w={chartWidth} h={chartHeight / Object.keys(props.groups[0]).filter(e => !unwantedKeys.includes(e)).length} values={props.groups.map(group => group[key])} min={minValue} max={maxValue} />
+                <BoxPlotPartial ticks={xTicks} label={key} w={chartWidth} h={chartHeight / Object.keys(props.groups[0]).filter(e => !unwantedKeys.includes(e)).length} values={props.groups.map(group => group[key])} min={minValue} max={maxValue} />
                 <text style={{ fontSize: 11 }} transform={'translate(' + (chartWidth + 10) + ',30)'}>{key}</text>
               </g>
             )
