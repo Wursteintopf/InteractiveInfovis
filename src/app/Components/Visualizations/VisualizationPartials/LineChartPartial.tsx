@@ -69,11 +69,26 @@ const LineChartPartial: React.FC<LineChartPartialProps> = (props) => {
     )
   }
 
+  const renderDetails = () => {
+    if (highlighted.includes(getAttributeFromString(props.label))) {
+      return (
+        <g>
+          {
+            props.values.map((value, index) => {
+              return <text key={index} transform={`translate(${index === 0 ? 30 : xOffset * index},${index === 0 ? scale(value) : scale(value) + 12})`} fontSize={12} textAnchor='end'>{value}</text>
+            })
+          }
+        </g>
+      )
+    }
+  }
+
   return (
     <g>
       <path d={grid(path())} fill='none' stroke='lightgrey' />
       <path d={line(path())} fill='none' stroke={color(getAttributeFromString(props.label))} strokeWidth={2} />
       {buildAxe()}
+      {renderDetails()}
     </g>
   )
 }

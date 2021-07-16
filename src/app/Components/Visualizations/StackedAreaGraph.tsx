@@ -37,11 +37,10 @@ const StackedAreaGraph: React.FC<StackedAreaGraphProps> = (props) => {
   const chartHeight = props.h - (2 * props.pad)
   const chartWidth = boxWidth - spacingLeft - spacingRight
 
-  const maxInc = max(props.groups.map(group => group.Haushaltsnettoeinkommen + group['Differenz zu Brutto'] + group['Sonstige Einnahmen']))
-  const maxExp = max(props.groups.map(group => group['Private Konsumausgaben'] + group['Andere Ausgaben']))
+  const maxValue = max(merge(props.groups.map(group => [group.Haushaltsnettoeinkommen + group['Differenz zu Brutto'] + group['Sonstige Einnahmen'], group['Private Konsumausgaben'] + group['Andere Ausgaben']])))
 
   const incomeY = useMemo(() => {
-    return scaleLinear().domain([0, maxInc]).range([chartHeight / 2, 0])
+    return scaleLinear().domain([0, maxValue]).range([chartHeight / 2, 0])
   }, [props.groups])
 
   const incTicks = useMemo(() => {
@@ -49,11 +48,7 @@ const StackedAreaGraph: React.FC<StackedAreaGraphProps> = (props) => {
   }, [props.groups])
 
   const expenditureY = useMemo(() => {
-    return scaleLinear().domain([0, maxExp]).range([chartHeight / 2, chartHeight])
-  }, [props.groups])
-
-  const expTicks = useMemo(() => {
-    return expenditureY.ticks(3)
+    return scaleLinear().domain([0, maxValue]).range([chartHeight / 2, chartHeight])
   }, [props.groups])
 
   const xOffSet = chartWidth / (labels.length - 1)
@@ -82,15 +77,43 @@ const StackedAreaGraph: React.FC<StackedAreaGraphProps> = (props) => {
     return context
   }
 
+  const renderDetails = (type, isInc: boolean) => {
+    if (highlighted.includes(getAttributeFromString(type.key))) {
+      return (
+        <g>
+          {
+            type.map((data, index) => {
+              return <text key={index} transform={`translate(${xOffSet * index + 20},${isInc ? incomeY(data[1]) + 15 : expenditureY(data[1]) - 3})`} fontSize={12} textAnchor={index === type.length - 1 ? 'end' : 'start'}>{data[1]}</text>
+            })
+          }
+        </g>
+      )
+    }
+  }
+
   return (
     <svg width={props.w} height={props.h} style={{ padding: props.pad }}>
       {/** Income Data above axis **/}
       {
-        stackedIncome.map((type, index) => <path key={index} d={area(path(), type, 'inc')} fill={color(getAttributeFromString(type.key))} />)
+        stackedIncome.map((type, index) => {
+          return (
+            <g key={index}>
+              <path key={index} d={area(path(), type, 'inc')} fill={color(getAttributeFromString(type.key))} />
+              {renderDetails(type, true)}
+            </g>
+          )
+        })
       }
       {/** Expenditure Data below axis **/}
       {
-        stackedExpenditure.map((type, index) => <path key={index} d={area(path(), type, 'exp')} fill={color(getAttributeFromString(type.key))} />)
+        stackedExpenditure.map((type, index) => {
+          return (
+            <g key={index}>
+              <path key={index} d={area(path(), type, 'exp')} fill={color(getAttributeFromString(type.key))} />
+              {renderDetails(type, false)}
+            </g>
+          )
+        })
       }
       {/** X Axis **/}
       <g>
@@ -122,7 +145,7 @@ const StackedAreaGraph: React.FC<StackedAreaGraphProps> = (props) => {
           })
         }
         {
-          expTicks.map(tick => {
+          incTicks.map(tick => {
             if (tick !== 0) {
               return (
                 <g key={tick} transform={`translate(0,${expenditureY(tick)})`}>

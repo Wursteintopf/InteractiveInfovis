@@ -3,6 +3,9 @@ import { max, merge } from 'd3-array'
 import { Group } from '../../../store/data/data.interfaces'
 import { path } from 'd3-path'
 import { scaleLinear, scaleOrdinal } from 'd3-scale'
+import { useSelector } from 'react-redux'
+import { getHighlightedAttributes } from '../../../store/ui/ui.selectors'
+import { getAttributeFromString } from '../../../util/DataUtil'
 
 interface ParallelCoordinatesProps {
     groups: Group[]
@@ -12,6 +15,8 @@ interface ParallelCoordinatesProps {
 }
 
 const ParallelCoordinates: React.FC<ParallelCoordinatesProps> = (props) => {
+  const highlights = useSelector(getHighlightedAttributes)
+
   const spacingLeft = 30
   const spacingBottom = 30
   const spacingRight = 50
@@ -29,13 +34,30 @@ const ParallelCoordinates: React.FC<ParallelCoordinatesProps> = (props) => {
   }, [props.groups])
 
   const color = useMemo(() => {
-    return scaleOrdinal().domain(axes).range(['#1487C2', '#28BCCA', '#C9D93B', '#FEA82A', '#D08AC0'])
+    return scaleOrdinal().domain(axes).range(['#5f0f40', '#9a031e', '#fb8b24', '#e36414', '#0f4c5c'])
   }, [])
 
   const xOffSet = chartWidth / (axes.length - 1)
 
-  return (
+  const renderDetails = () => {
+    return (
+      <g>
+        {
+          props.groups.map(group => {
+            return axes.map((axe, index) => {
+              if (highlights.includes(getAttributeFromString(axe))) {
+                return (
+                  <text transform={`translate(${index * xOffSet},${y(group[axe]) + 10})`} fontSize={12}>{group[axe]}</text>
+                )
+              }
+            })
+          })
+        }
+      </g>
+    )
+  }
 
+  return (
     <svg width={props.w} height={props.h} style={{ padding: props.pad }}>
       {/** Values**/}
       <g>
@@ -76,7 +98,7 @@ const ParallelCoordinates: React.FC<ParallelCoordinatesProps> = (props) => {
           axes.map((axe, index) => {
             return (
               <g key={index} transform={'translate(' + (index * xOffSet + spacingLeft - 5) + ',' + (chartHeight) + ')rotate(270)'} style={{ fontSize: 11 }}>
-                <text>{axe}</text>
+                <text fill={highlights.includes(getAttributeFromString(axe)) ? 'lightgrey' : 'black'}>{axe}</text>
               </g>
             )
           })
@@ -95,8 +117,9 @@ const ParallelCoordinates: React.FC<ParallelCoordinatesProps> = (props) => {
           })
         }
       </g>
+      {/** Details **/}
+      {renderDetails()}
     </svg>
-
   )
 }
 

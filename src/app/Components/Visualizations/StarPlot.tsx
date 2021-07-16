@@ -30,7 +30,7 @@ const StarPlot:React.FC<StarPlotProps> = props => {
   const tickOffset = radius / scaleTicks.length
 
   const color = useMemo(() => {
-    return scaleOrdinal().domain(axes).range(['#1487C2', '#28BCCA', '#C9D93B', '#FEA82A', '#D08AC0'])
+    return scaleOrdinal().domain(axes).range(['#5f0f40', '#9a031e', '#fb8b24', '#e36414', '#0f4c5c'])
   }, [])
 
   return (

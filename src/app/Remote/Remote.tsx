@@ -25,7 +25,7 @@ const Remote: React.FC = () => {
     channel.addEventListener('message', message => {
       switch (message.data.command) {
         case 'resetUiState':
-          dispatch(resetUiState)
+          dispatch(resetUiState())
           break
       }
     })

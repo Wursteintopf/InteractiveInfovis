@@ -45,6 +45,16 @@ const StackedBarChart: React.FC<StackedBarChartProps> = props => {
   const stackedIncome = useSelector(getStackedIncomeData)
   const stackedExpenditure = useSelector(getStackedExpenditureData)
 
+  const details = (rect, key, xPos) => {
+    if (highlighted.includes(getAttributeFromString(key))) {
+      return (
+        <g transform={`translate(${xPos},0)`} fill='black'>
+          <text transform={`translate(2,${chartHeight - y(rect[1]) + 14})`} fontSize={12}>{rect[1]}</text>
+        </g>
+      )
+    }
+  }
+
   return (
     <svg width={props.w} height={props.h} style={{ padding: props.pad }}>
       {/** Income **/}
@@ -56,8 +66,14 @@ const StackedBarChart: React.FC<StackedBarChartProps> = props => {
                 type.map((rect, index) => {
                   const height = y(rect[1]) - y(rect[0])
                   const yPos = chartHeight - height - y(rect[0])
+                  const xPos = spacingLeft + (index * xOffSet)
 
-                  return <rect key={index} x={spacingLeft + (index * xOffSet)} y={yPos} height={height} width={30} />
+                  return (
+                    <g key={index}>
+                      <rect x={xPos} y={yPos} height={height} width={32} />
+                      {details(rect, type.key, xPos)}
+                    </g>
+                  )
                 })
               }
             </g>
@@ -73,8 +89,14 @@ const StackedBarChart: React.FC<StackedBarChartProps> = props => {
                 type.map((rect, index) => {
                   const height = y(rect[1]) - y(rect[0])
                   const yPos = chartHeight - height - y(rect[0])
+                  const xPos = spacingLeft + 40 + (index * xOffSet)
 
-                  return <rect key={index} x={spacingLeft + 40 + (index * xOffSet)} y={yPos} height={height} width={30} />
+                  return (
+                    <g key={index}>
+                      <rect key={index} x={xPos} y={yPos} height={height} width={32} />
+                      {details(rect, type.key, xPos)}
+                    </g>
+                  )
                 })
               }
             </g>

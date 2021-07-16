@@ -72,10 +72,23 @@ const BoxPlotPartial: React.FC<BoxPlotPartialProps> = (props) => {
     return context
   }
 
+  const drawHighlights = () => {
+    if (highlighted.includes(getAttributeFromString(props.label))) {
+      return (
+        <g>
+          <text transform={`translate(${minimum},${props.h - 7})`} fontSize={12}>{Math.floor(min(props.values))}</text>
+          <text transform={`translate(${maximum},${props.h - 7})`} fontSize={12} textAnchor='end'>{Math.floor(max(props.values))}</text>
+          <text transform={`translate(${median},14)`} fontSize={12} textAnchor='middle'>{Math.floor(quantile(props.values, 0.5))}</text>
+        </g>
+      )
+    }
+  }
+
   return (
     <g>
       <path d={drawTicks(path())} fill='none' stroke='lightgrey' />
       <path d={drawBoxplot(path())} fill={color(getAttributeFromString(props.label))} stroke='black' />
+      {drawHighlights()}
     </g>
   )
 }

@@ -11,7 +11,7 @@ interface LineChartProps {
 
 const LineChart: React.FC<LineChartProps> = (props) => {
   const spacingTop = 0
-  const spacingLeft = 20
+  const spacingLeft = 30
   const spacingRight = 45
   const spacingBottom = 20
   const boxWidth = props.w - 2 * props.pad

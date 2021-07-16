@@ -18,6 +18,7 @@ import StackedAreaGraph from '../../Components/Visualizations/StackedAreaGraph'
 import StackedBarChart from '../../Components/Visualizations/StackedBarChart'
 import BoxPlot from '../../Components/Visualizations/BoxPlot'
 import ParallelCoordinates from '../../Components/Visualizations/ParallelCoordinates'
+import Legend from '../../Components/Visualizations/Legend'
 
 const DataScreen2: React.FC = () => {
   const flattenedBy = useSelector(getFlattenedBy)
@@ -60,6 +61,7 @@ const DataScreen2: React.FC = () => {
         <ParallelCoordinates groups={flattenedData} w={columnWidth * 2} h={rowHeight * 4} pad={20} />
       </ParallelCoordinatesArea>
 
+      <Legend />
     </ScreenLayout>
   )
 }
