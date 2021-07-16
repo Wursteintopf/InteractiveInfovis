@@ -83,7 +83,7 @@ const StackedAreaGraph: React.FC<StackedAreaGraphProps> = (props) => {
         <g>
           {
             type.map((data, index) => {
-              return <text key={index} transform={`translate(${xOffSet * index + 20},${isInc ? incomeY(data[1]) + 15 : expenditureY(data[1]) - 3})`} fontSize={12} textAnchor={index === type.length - 1 ? 'end' : 'start'}>{data[1]}</text>
+              return <text key={index} transform={`translate(${xOffSet * index + 20},${isInc ? incomeY(data[1]) + 15 : expenditureY(data[1]) - 3})`} fontSize={12} textAnchor={index === type.length - 1 ? 'end' : 'start'}>{Math.floor(data[1])}</text>
             })
           }
         </g>

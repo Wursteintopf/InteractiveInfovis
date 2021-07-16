@@ -75,7 +75,7 @@ const LineChartPartial: React.FC<LineChartPartialProps> = (props) => {
         <g>
           {
             props.values.map((value, index) => {
-              return <text key={index} transform={`translate(${index === 0 ? 30 : xOffset * index},${index === 0 ? scale(value) : scale(value) + 12})`} fontSize={12} textAnchor='end'>{value}</text>
+              return <text key={index} transform={`translate(${index === 0 ? 30 : xOffset * index},${index === 0 ? scale(value) : scale(value) + 12})`} fontSize={12} textAnchor='end'>{Math.floor(value)}</text>
             })
           }
         </g>

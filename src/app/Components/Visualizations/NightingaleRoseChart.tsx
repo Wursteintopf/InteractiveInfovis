@@ -65,7 +65,7 @@ const NightingaleRoseChart: React.FC<PieChartProps> = (props) => {
     if (highlighted.includes(getAttributeFromString(key))) {
       const [x, y] = convertAngleAndLengthToCoordinates(angle, scale(value) - 10)
 
-      return <text transform={`translate(${x},${y}) rotate(${angle})`} textAnchor='end' fontSize={12}>{value}</text>
+      return <text transform={`translate(${x},${y}) rotate(${angle})`} textAnchor='end' fontSize={12}>{Math.floor(value)}</text>
     }
   }
 

@@ -49,7 +49,7 @@ const StackedBarChart: React.FC<StackedBarChartProps> = props => {
     if (highlighted.includes(getAttributeFromString(key))) {
       return (
         <g transform={`translate(${xPos},0)`} fill='black'>
-          <text transform={`translate(2,${chartHeight - y(rect[1]) + 14})`} fontSize={12}>{rect[1]}</text>
+          <text transform={`translate(2,${chartHeight - y(rect[1]) + 14})`} fontSize={12}>{Math.floor(rect[1])}</text>
         </g>
       )
     }
