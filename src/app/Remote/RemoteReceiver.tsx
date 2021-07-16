@@ -5,7 +5,7 @@ import {
   resetUiState,
   setFlattenedBy,
   setSelectedHouseholdSize,
-  setSelectedYear, toggleHighlightedAttribute,
+  setSelectedYear, setZoom, toggleHighlightedAttribute,
 } from '../../store/ui/ui.actions'
 import { getChannel } from '../../store/ui/ui.selectors'
 
@@ -42,6 +42,10 @@ const RemoteReceiver: React.FC = () => {
 
         case 'toggleHighlightedAttribute':
           dispatch(toggleHighlightedAttribute(message.data.payload))
+          break
+
+        case 'setZoom':
+          dispatch(setZoom(message.data.payload))
           break
       }
     })

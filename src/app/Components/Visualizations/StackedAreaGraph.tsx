@@ -7,7 +7,7 @@ import { max, merge } from 'd3-array'
 import bezierSpline from '@freder/bezier-spline'
 import { path } from 'd3-path'
 import { getColorByKey, getMutedColorByKey } from '../../../style/theme'
-import { getHighlightedAttributes } from '../../../store/ui/ui.selectors'
+import { getHighlightedAttributes, getZoom } from '../../../store/ui/ui.selectors'
 import { attribute } from '../../../store/ui/ui.interfaces'
 import { getAttributeFromString } from '../../../util/DataUtil'
 
@@ -20,6 +20,7 @@ interface StackedAreaGraphProps {
 
 const StackedAreaGraph: React.FC<StackedAreaGraphProps> = (props) => {
   const highlighted = useSelector(getHighlightedAttributes)
+  const zoom = useSelector(getZoom)
 
   const color = (key: attribute) => {
     if (highlighted.includes(key) || highlighted.length === 0) return getColorByKey(key)
@@ -40,21 +41,21 @@ const StackedAreaGraph: React.FC<StackedAreaGraphProps> = (props) => {
   const maxValue = max(merge(props.groups.map(group => [group.Haushaltsnettoeinkommen + group['Differenz zu Brutto'] + group['Sonstige Einnahmen'], group['Private Konsumausgaben'] + group['Andere Ausgaben']])))
 
   const incomeY = useMemo(() => {
-    return scaleLinear().domain([0, maxValue]).range([chartHeight / 2, 0])
-  }, [props.groups])
+    return scaleLinear().domain(zoom).range([chartHeight / 2, 0])
+  }, [props.groups, zoom])
 
   const incTicks = useMemo(() => {
     return incomeY.ticks(5)
   }, [props.groups])
 
   const expenditureY = useMemo(() => {
-    return scaleLinear().domain([0, maxValue]).range([chartHeight / 2, chartHeight])
-  }, [props.groups])
+    return scaleLinear().domain(zoom).range([chartHeight / 2, chartHeight])
+  }, [props.groups, zoom])
 
   const xOffSet = chartWidth / (labels.length - 1)
 
   const area = (context, type, incOrExp: 'inc' | 'exp') => {
-    const points = type.map((p, index) => [xOffSet * index + spacingLeft, incOrExp === 'inc' ? incomeY(p[1]) : expenditureY(p[1])])
+    const points = type.map((p, index) => [xOffSet * index + spacingLeft, incOrExp === 'inc' ? (incomeY(p[1]) >= chartHeight / 2 ? chartHeight / 2 : incomeY(p[1])) : (expenditureY(p[1]) <= chartHeight / 2 ? chartHeight / 2 : expenditureY(p[1]))])
     const controlPoints = bezierSpline.getControlPoints(points)
     const combined = bezierSpline.combinePoints(points, controlPoints)
     const segments = bezierSpline.getSegments(combined)
@@ -64,7 +65,7 @@ const StackedAreaGraph: React.FC<StackedAreaGraphProps> = (props) => {
       context.bezierCurveTo(segment[1][0], segment[1][1], segment[2][0], segment[2][1], segment[3][0], segment[3][1])
     })
 
-    const pointsBack = type.map((p, index) => [xOffSet * index + spacingLeft, incOrExp === 'inc' ? incomeY(p[0]) : expenditureY(p[0])]).reverse()
+    const pointsBack = type.map((p, index) => [xOffSet * index + spacingLeft, incOrExp === 'inc' ? (incomeY(p[0]) >= chartHeight / 2 ? chartHeight / 2 : incomeY(p[0])) : (expenditureY(p[0]) <= chartHeight / 2 ? chartHeight / 2 : expenditureY(p[0]))]).reverse()
     const controlPointsBack = bezierSpline.getControlPoints(pointsBack)
     const combinedBack = bezierSpline.combinePoints(pointsBack, controlPointsBack)
     const segmentsBack = bezierSpline.getSegments(combinedBack)

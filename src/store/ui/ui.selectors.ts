@@ -37,3 +37,8 @@ export const getChannel = createSelector(
   selectUiState,
   state => state.channel,
 )
+
+export const getZoom = createSelector(
+  selectUiState,
+  state => state.zoom,
+)

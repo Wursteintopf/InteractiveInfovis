@@ -6,6 +6,7 @@ import { Checkbox } from '@material-ui/core'
 import { getChannel, getHighlightedAttributes } from '../../../store/ui/ui.selectors'
 import { attribute } from '../../../store/ui/ui.interfaces'
 import HighlightToggles from './HighlightToggles'
+import ZoomSlider from './ZoomSlider'
 
 const RemoteScreen2: React.FC = () => {
   const dispatch = useDispatch()
@@ -50,6 +51,7 @@ const RemoteScreen2: React.FC = () => {
         </BackButton>
       </BlockWrapper>
       <HighlightToggles />
+      <ZoomSlider />
     </div>
   )
 }

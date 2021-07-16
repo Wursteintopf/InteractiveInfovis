@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux'
 import { getStackedExpenditureData, getStackedIncomeData } from '../../../store/data/data.selectors'
 import { Group } from '../../../store/data/data.interfaces'
 import { getColorByKey, getMutedColorByKey } from '../../../style/theme'
-import { getHighlightedAttributes } from '../../../store/ui/ui.selectors'
+import { getHighlightedAttributes, getZoom } from '../../../store/ui/ui.selectors'
 import { attribute } from '../../../store/ui/ui.interfaces'
 import { getAttributeFromString } from '../../../util/DataUtil'
 
@@ -18,6 +18,7 @@ interface StackedBarChartProps {
 
 const StackedBarChart: React.FC<StackedBarChartProps> = props => {
   const highlighted = useSelector(getHighlightedAttributes)
+  const zoom = useSelector(getZoom)
 
   const color = (key: attribute) => {
     if (highlighted.includes(key) || highlighted.length === 0) return getColorByKey(key)
@@ -30,15 +31,14 @@ const StackedBarChart: React.FC<StackedBarChartProps> = props => {
   const spacingBottom = 50
   const chartWidth = (props.w - (2 * props.pad) - spacingLeft)
   const chartHeight = (props.h - (2 * props.pad) - spacingBottom)
-  const maxValue = max(merge(props.groups.map(group => [group.Haushaltsnettoeinkommen + group['Differenz zu Brutto'] + group['Sonstige Einnahmen'], group['Private Konsumausgaben'] + group['Andere Ausgaben']])))
 
   const y = useMemo(() => {
-    return scaleLinear().domain([0, maxValue]).range([0, chartHeight])
-  }, [props.groups])
+    return scaleLinear().domain(zoom).range([0, chartHeight])
+  }, [props.groups, zoom])
 
   const yTicks = useMemo(() => {
-    return y.ticks()
-  }, [props.groups])
+    return y.ticks(5)
+  }, [props.groups, zoom])
 
   const xOffSet = chartWidth / labels.length
 
@@ -119,6 +119,7 @@ const StackedBarChart: React.FC<StackedBarChartProps> = props => {
       </g>
       {/** X Axis **/}
       <g>
+        <rect x={spacingLeft} y={chartHeight} width={chartWidth} height={spacingBottom + 1} fill='white' />
         <path d={'M ' + spacingLeft + ' ' + chartHeight + 'H ' + (chartWidth + spacingLeft)} stroke='darkgrey' />
         {
           labels.map((label, index) => {

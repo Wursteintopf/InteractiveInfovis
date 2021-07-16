@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getChannel, getFlattenedBy } from '../../../store/ui/ui.selectors'
 import { householdSize, year } from '../../../store/ui/ui.interfaces'
 import HighlightToggles from './HighlightToggles'
+import ZoomSlider from './ZoomSlider'
 
 const RemoteScreen1: React.FC = () => {
   const dispatch = useDispatch()
@@ -92,6 +93,7 @@ const RemoteScreen1: React.FC = () => {
         </div>
       </BlockWrapper>
       <HighlightToggles />
+      <ZoomSlider />
     </div>
   )
 }

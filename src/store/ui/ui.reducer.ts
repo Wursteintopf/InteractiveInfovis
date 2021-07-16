@@ -6,7 +6,7 @@ import {
   resetUiState,
   setFlattenedBy,
   setSelectedHouseholdSize,
-  setSelectedYear,
+  setSelectedYear, setZoom,
 } from './ui.actions'
 
 const INITIAL_STATE: UiState = {
@@ -16,6 +16,7 @@ const INITIAL_STATE: UiState = {
   currentScreen: 1,
   highlights: [],
   channel: new BroadcastChannel('remote'),
+  zoom: [0, 5000],
 }
 
 export const UiReducer = reducerWithInitialState(INITIAL_STATE)
@@ -55,5 +56,11 @@ export const UiReducer = reducerWithInitialState(INITIAL_STATE)
         ...state,
         highlights: [...state.highlights, payload],
       }
+    }
+  })
+  .case(setZoom, (state, payload) => {
+    return {
+      ...state,
+      zoom: payload,
     }
   })

@@ -11,4 +11,5 @@ export interface UiState {
   currentScreen: currentScreen
   highlights: attribute[]
   channel: BroadcastChannel
+  zoom: [number, number]
 }

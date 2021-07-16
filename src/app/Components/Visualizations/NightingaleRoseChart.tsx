@@ -7,7 +7,7 @@ import { Group } from '../../../store/data/data.interfaces'
 import { convertAngleAndLengthToCoordinates } from '../../../util/MathUtil'
 import { getColorByKey, getMutedColorByKey } from '../../../style/theme'
 import { path } from 'd3-path'
-import { getHighlightedAttributes } from '../../../store/ui/ui.selectors'
+import { getHighlightedAttributes, getZoom } from '../../../store/ui/ui.selectors'
 import { attribute } from '../../../store/ui/ui.interfaces'
 import { getAttributeFromString } from '../../../util/DataUtil'
 
@@ -20,6 +20,7 @@ export interface PieChartProps {
 
 const NightingaleRoseChart: React.FC<PieChartProps> = (props) => {
   const highlighted = useSelector(getHighlightedAttributes)
+  const zoom = useSelector(getZoom)
 
   const color = (key: attribute) => {
     if (highlighted.includes(key) || highlighted.length === 0) return getColorByKey(key)
@@ -34,8 +35,8 @@ const NightingaleRoseChart: React.FC<PieChartProps> = (props) => {
   props.groups.forEach(group => { allHouseholds += group['Erfasste Haushalte'] })
 
   const scale = useMemo(() => {
-    return scaleLinear().domain([0, maxValue]).range([0, radius])
-  }, [props.groups])
+    return scaleLinear().domain(zoom).range([0, radius])
+  }, [props.groups, zoom])
 
   const rotationScale = useMemo(() => {
     return scaleLinear().domain([0, allHouseholds]).range([0, 360])
@@ -45,10 +46,10 @@ const NightingaleRoseChart: React.FC<PieChartProps> = (props) => {
   const stackedExpenditure = useSelector(getStackedExpenditureData)
 
   const arcPath = (r1, r2, a1, a2) => {
-    const [x1, y1] = convertAngleAndLengthToCoordinates(a1, r1)
-    const [x2, y2] = convertAngleAndLengthToCoordinates(a1, r2)
-    const [x3, y3] = convertAngleAndLengthToCoordinates(a2, r2)
-    const [x4, y4] = convertAngleAndLengthToCoordinates(a2, r1)
+    const [x1, y1] = convertAngleAndLengthToCoordinates(a1, r1 <= 0 ? 0 : r1)
+    const [x2, y2] = convertAngleAndLengthToCoordinates(a1, r2 <= 0 ? 0 : r2)
+    const [x3, y3] = convertAngleAndLengthToCoordinates(a2, r2 <= 0 ? 0 : r2)
+    const [x4, y4] = convertAngleAndLengthToCoordinates(a2, r1 <= 0 ? 0 : r1)
 
     return 'M ' + x2 + ' ' + y2 + ' A ' + r2 + ' ' + r2 + ' 0 0 1 ' + x3 + ' ' + y3 + ' L ' + x4 + ' ' + y4 + ' A ' + r1 + ' ' + r1 + ' 0 0 0 ' + x1 + ' ' + y1
   }

@@ -3,6 +3,7 @@ import { RootState } from '../root.reducer'
 import { stack } from 'd3-shape'
 import { Group } from './data.interfaces'
 import { getHouseholdSizeFromInt } from '../../util/DataUtil'
+import { max, merge } from 'd3-array'
 
 const incomeKeys = ['Haushaltsnettoeinkommen', 'Differenz zu Brutto', 'Sonstige Einnahmen']
 const expenditureKeys = ['Private Konsumausgaben', 'Andere Ausgaben']
@@ -142,5 +143,12 @@ export const getStackedExpenditureData = createSelector(
   getFlattenedData,
   state => {
     return stack().keys(expenditureKeys)(state)
+  },
+)
+
+export const getMaxValue = createSelector(
+  getFlattenedData,
+  state => {
+    return (max(merge(state.map(group => [group.Haushaltsnettoeinkommen + group['Differenz zu Brutto'] + group['Sonstige Einnahmen'], group['Private Konsumausgaben'] + group['Andere Ausgaben']]))))
   },
 )
