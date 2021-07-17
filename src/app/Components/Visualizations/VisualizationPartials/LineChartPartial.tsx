@@ -4,7 +4,7 @@ import { min, max } from 'd3-array'
 import { path } from 'd3-path'
 import { getColorByKey, getMutedColorByKey } from '../../../../style/theme'
 import { useSelector } from 'react-redux'
-import { getHighlightedAttributes } from '../../../../store/ui/ui.selectors'
+import { getHighlightedAttributes, getZoom } from '../../../../store/ui/ui.selectors'
 import { attribute } from '../../../../store/ui/ui.interfaces'
 import { getAttributeFromString } from '../../../../util/DataUtil'
 
@@ -18,10 +18,17 @@ interface LineChartPartialProps {
 const LineChartPartial: React.FC<LineChartPartialProps> = (props) => {
   const boxHeight = props.h - 10
   const highlighted = useSelector(getHighlightedAttributes)
+  const zoom = useSelector(getZoom)
+
+  let [minVal, maxVal] = [min(props.values) < zoom[0] ? zoom[0] : min(props.values), max(props.values) > zoom[1] ? zoom[1] : max(props.values)]
+  if (zoom[0] > max(props.values) || zoom[1] < min(props.values)) {
+    minVal = 0
+    maxVal = 0
+  }
 
   const scale = useMemo(() => {
-    return scaleLinear().domain([min(props.values), max(props.values)]).range([boxHeight, 0])
-  }, [props.values])
+    return scaleLinear().domain([minVal, maxVal]).range([boxHeight, 0])
+  }, [props.values, zoom])
 
   const color = (key: attribute) => {
     if (highlighted.includes(key) || highlighted.length === 0) return getColorByKey(key)
@@ -48,12 +55,14 @@ const LineChartPartial: React.FC<LineChartPartialProps> = (props) => {
   }
 
   const line = (context) => {
-    props.values.forEach((value, index) => {
-      if (index === 0) context.moveTo(0, scale(value))
-      else context.lineTo(xOffset * index, scale(value))
-    })
+    if (minVal !== 0 || maxVal !== 0) {
+      props.values.forEach((value, index) => {
+        if (index === 0) context.moveTo(0, scale(value) < 0 ? 0 : scale(value) > boxHeight ? boxHeight : scale(value))
+        else context.lineTo(xOffset * index, scale(value) < 0 ? 0 : scale(value) > boxHeight ? boxHeight : scale(value))
+      })
 
-    return context
+      return context
+    }
   }
 
   const buildAxe = () => {

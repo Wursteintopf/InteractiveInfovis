@@ -4,7 +4,7 @@ import { Group } from '../../../store/data/data.interfaces'
 import { path } from 'd3-path'
 import { scaleLinear, scaleOrdinal } from 'd3-scale'
 import { useSelector } from 'react-redux'
-import { getHighlightedAttributes } from '../../../store/ui/ui.selectors'
+import { getHighlightedAttributes, getZoom } from '../../../store/ui/ui.selectors'
 import { getAttributeFromString } from '../../../util/DataUtil'
 
 interface ParallelCoordinatesProps {
@@ -16,9 +16,10 @@ interface ParallelCoordinatesProps {
 
 const ParallelCoordinates: React.FC<ParallelCoordinatesProps> = (props) => {
   const highlights = useSelector(getHighlightedAttributes)
+  const zoom = useSelector(getZoom)
 
   const spacingLeft = 30
-  const spacingBottom = 30
+  const spacingBottom = 10
   const spacingRight = 50
   const chartWidth = (props.w - (2 * props.pad) - spacingLeft - spacingRight)
   const chartHeight = (props.h - (2 * props.pad) - spacingBottom)
@@ -26,8 +27,8 @@ const ParallelCoordinates: React.FC<ParallelCoordinatesProps> = (props) => {
   const axes = ['Haushaltsbruttoeinkommen', 'Haushaltsnettoeinkommen', 'Ausgabefaehige Einkommen und Einnahmen', 'Private Konsumausgaben', 'Andere Ausgaben']
 
   const y = useMemo(() => {
-    return scaleLinear().domain([0, maxValue]).range([chartHeight, 0])
-  }, [props.groups])
+    return scaleLinear().domain(zoom).range([chartHeight, 0])
+  }, [props.groups, zoom])
 
   const yTicks = useMemo(() => {
     return y.ticks()

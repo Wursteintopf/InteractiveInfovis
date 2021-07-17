@@ -3,6 +3,8 @@ import { Group } from '../../../store/data/data.interfaces'
 import { max, min, merge } from 'd3-array'
 import BoxPlotPartial from './VisualizationPartials/BoxPlotPartial'
 import { scaleLinear } from 'd3-scale'
+import { getZoom } from '../../../store/ui/ui.selectors'
+import { useSelector } from 'react-redux'
 
 interface BoxPlotPartials {
   w: number
@@ -12,6 +14,8 @@ interface BoxPlotPartials {
 }
 
 const BoxPlot: React.FC<BoxPlotPartials> = (props) => {
+  const zoom = useSelector(getZoom)
+
   const spacingTop = 0
   const spacingLeft = 20
   const spacingRight = 220
@@ -30,12 +34,13 @@ const BoxPlot: React.FC<BoxPlotPartials> = (props) => {
   const minValue = min(merge(props.groups.map(group => [group.Haushaltsbruttoeinkommen, group.Haushaltsnettoeinkommen, group['Ausgabefaehige Einkommen und Einnahmen'], group['Private Konsumausgaben'], group['Andere Ausgaben']])))
 
   const x = useMemo(() => {
-    return scaleLinear().domain([minValue, maxValue]).range([0, chartWidth])
-  }, [props.groups])
+
+    return scaleLinear().domain([minValue > zoom[0] ? minValue : zoom[0], maxValue < zoom[1] ? maxValue : zoom[1]]).range([0, chartWidth])
+  }, [props.groups, zoom])
 
   const xTicks = useMemo(() => {
     return x.ticks(5)
-  }, [props.groups])
+  }, [props.groups, zoom])
 
   return (
     <svg width={props.w} height={props.h} style={{ padding: props.pad }}>

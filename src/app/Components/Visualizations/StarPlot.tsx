@@ -3,6 +3,8 @@ import { min, max, merge } from 'd3-array'
 import { scaleLinear, scaleOrdinal } from 'd3-scale'
 import { convertAngleAndLengthToCoordinates } from '../../../util/MathUtil'
 import { Group } from '../../../store/data/data.interfaces'
+import { useSelector } from 'react-redux'
+import { getZoom } from '../../../store/ui/ui.selectors'
 
 interface StarPlotProps {
   groups: Group[]
@@ -12,6 +14,7 @@ interface StarPlotProps {
 }
 
 const StarPlot:React.FC<StarPlotProps> = props => {
+  const zoom = useSelector(getZoom)
   const labels = props.groups.map(group => group.label)
   const chartSize = (props.size - (2 * props.pad))
   const radius = chartSize / 2
@@ -20,7 +23,7 @@ const StarPlot:React.FC<StarPlotProps> = props => {
   const axes = ['Haushaltsbruttoeinkommen', 'Haushaltsnettoeinkommen', 'Ausgabefaehige Einkommen und Einnahmen', 'Private Konsumausgaben', 'Andere Ausgaben']
 
   const scale = useMemo(() => {
-    return scaleLinear().domain([minValue, maxValue]).range([0, radius])
+    return scaleLinear().domain([minValue > zoom[0] ? minValue : zoom[0], maxValue < zoom[1] ? maxValue : zoom[1]]).range([0, radius])
   }, [props.groups])
 
   const scaleTicks = useMemo(() => {
@@ -65,7 +68,7 @@ const StarPlot:React.FC<StarPlotProps> = props => {
       {/** Values**/}
       <g>
         {props.groups.map((group, index) => {
-          const coordList = axes.map((axe, index2) => convertAngleAndLengthToCoordinates(360 / axes.length * index2, scale(group[axe])))
+          const coordList = axes.map((axe, index2) => convertAngleAndLengthToCoordinates(360 / axes.length * index2, scale(group[axe]) <= 0 ? 0 : scale(group[axe])))
           let pathString = 'M '
           coordList.forEach(coord => {
             pathString += coord[0] + ' ' + coord[1] + ' L '

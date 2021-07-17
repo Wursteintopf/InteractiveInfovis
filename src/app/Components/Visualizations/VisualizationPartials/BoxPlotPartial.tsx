@@ -4,7 +4,7 @@ import { max, min, quantile } from 'd3-array'
 import { path } from 'd3-path'
 import { getColorByKey, getMutedColorByKey } from '../../../../style/theme'
 import { useSelector } from 'react-redux'
-import { getHighlightedAttributes } from '../../../../store/ui/ui.selectors'
+import { getHighlightedAttributes, getZoom } from '../../../../store/ui/ui.selectors'
 import { attribute } from '../../../../store/ui/ui.interfaces'
 import { getAttributeFromString } from '../../../../util/DataUtil'
 
@@ -20,6 +20,7 @@ interface BoxPlotPartialProps {
 
 const BoxPlotPartial: React.FC<BoxPlotPartialProps> = (props) => {
   const highlighted = useSelector(getHighlightedAttributes)
+  const zoom = useSelector(getZoom)
 
   const color = (key: attribute) => {
     if (highlighted.includes(key) || highlighted.length === 0) return getColorByKey(key)
@@ -28,15 +29,21 @@ const BoxPlotPartial: React.FC<BoxPlotPartialProps> = (props) => {
 
   const spacingTopBottom = 20
 
+  let [minVal, maxVal] = [props.min < zoom[0] ? zoom[0] : props.min, props.max > zoom[1] ? zoom[1] : props.max]
+  if (zoom[0] > props.max || zoom[1] < props.min) {
+    minVal = 0
+    maxVal = 0
+  }
+
   const x = useMemo(() => {
-    return scaleLinear().domain([props.min, props.max]).range([0, props.w])
+    return scaleLinear().domain([minVal, maxVal]).range([0, props.w])
   }, [props.values])
 
-  const minimum = x(min(props.values))
-  const lowerQuantile = x(quantile(props.values, 0.25))
-  const median = x(quantile(props.values, 0.5))
-  const upperQuantile = x(quantile(props.values, 0.75))
-  const maximum = x(max(props.values))
+  const minimum = x(min(props.values)) > props.w ? props.w : x(min(props.values))
+  const lowerQuantile = x(quantile(props.values, 0.25)) > props.w ? props.w : x(quantile(props.values, 0.25))
+  const median = x(quantile(props.values, 0.5)) > props.w ? props.w : x(quantile(props.values, 0.5))
+  const upperQuantile = x(quantile(props.values, 0.75)) > props.w ? props.w : x(quantile(props.values, 0.75))
+  const maximum = x(max(props.values)) > props.w ? props.w : x(max(props.values))
 
   const drawTicks = (context) => {
     props.ticks.forEach(tick => {
