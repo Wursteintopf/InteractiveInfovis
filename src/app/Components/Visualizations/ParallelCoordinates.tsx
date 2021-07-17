@@ -19,11 +19,10 @@ const ParallelCoordinates: React.FC<ParallelCoordinatesProps> = (props) => {
   const zoom = useSelector(getZoom)
 
   const spacingLeft = 30
-  const spacingBottom = 10
+  const spacingBottom = 0
   const spacingRight = 50
   const chartWidth = (props.w - (2 * props.pad) - spacingLeft - spacingRight)
   const chartHeight = (props.h - (2 * props.pad) - spacingBottom)
-  const maxValue = max(merge(props.groups.map(group => [group.Haushaltsbruttoeinkommen, group.Haushaltsnettoeinkommen, group['Ausgabefaehige Einkommen und Einnahmen'], group['Private Konsumausgaben'], group['Andere Ausgaben']])))
   const axes = ['Haushaltsbruttoeinkommen', 'Haushaltsnettoeinkommen', 'Ausgabefaehige Einkommen und Einnahmen', 'Private Konsumausgaben', 'Andere Ausgaben']
 
   const y = useMemo(() => {
@@ -109,12 +108,14 @@ const ParallelCoordinates: React.FC<ParallelCoordinatesProps> = (props) => {
       <g transform={`translate(${chartWidth + spacingLeft},0)`}>
         {
           yTicks.map(tick => {
-            return (
-              <g key={tick} transform={`translate(0,${y(tick)})`}>
-                <line x2={7} stroke='darkgrey' />
-                <text transform='translate(10,5)' fontSize={12}>{tick}€</text>
-              </g>
-            )
+            if (tick !== 0) {
+              return (
+                <g key={tick} transform={`translate(0,${y(tick)})`}>
+                  <line x2={7} stroke='darkgrey' />
+                  <text transform='translate(10,5)' fontSize={12}>{tick}€</text>
+                </g>
+              )
+            }
           })
         }
       </g>

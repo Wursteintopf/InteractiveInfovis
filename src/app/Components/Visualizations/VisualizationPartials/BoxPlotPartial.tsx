@@ -39,11 +39,11 @@ const BoxPlotPartial: React.FC<BoxPlotPartialProps> = (props) => {
     return scaleLinear().domain([minVal, maxVal]).range([0, props.w])
   }, [props.values])
 
-  const minimum = x(min(props.values)) > props.w ? props.w : x(min(props.values))
-  const lowerQuantile = x(quantile(props.values, 0.25)) > props.w ? props.w : x(quantile(props.values, 0.25))
-  const median = x(quantile(props.values, 0.5)) > props.w ? props.w : x(quantile(props.values, 0.5))
-  const upperQuantile = x(quantile(props.values, 0.75)) > props.w ? props.w : x(quantile(props.values, 0.75))
-  const maximum = x(max(props.values)) > props.w ? props.w : x(max(props.values))
+  const minimum = x(min(props.values))
+  const lowerQuantile = x(quantile(props.values, 0.25))
+  const median = x(quantile(props.values, 0.5))
+  const upperQuantile = x(quantile(props.values, 0.75))
+  const maximum = x(max(props.values))
 
   const drawTicks = (context) => {
     props.ticks.forEach(tick => {

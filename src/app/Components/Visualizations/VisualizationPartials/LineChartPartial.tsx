@@ -66,25 +66,42 @@ const LineChartPartial: React.FC<LineChartPartialProps> = (props) => {
   }
 
   const buildAxe = () => {
-    return (
-      <g>
-        <g transform={`translate(${props.w + 10},${scale(max(props.values)) + 12})`}>
-          <text fontSize={12}>{Math.floor(max(props.values))}€</text>
-        </g>
-        <g transform={`translate(${props.w + 10},${scale(min(props.values))})`}>
-          <text fontSize={12}>{Math.floor(min(props.values))}€</text>
-        </g>
+    const y1 = scale(max(props.values)) < 0 ? null : scale(max(props.values)) + 12
+    const y2 = scale(min(props.values)) > boxHeight ? null : scale(min(props.values))
+
+    const upperVal = (
+      <g transform={`translate(${props.w + 10},${scale(max(props.values)) + 12})`}>
+        <text fontSize={12}>{Math.floor(max(props.values))}€</text>
       </g>
     )
+
+    const lowerVal = (
+      <g transform={`translate(${props.w + 10},${scale(min(props.values))})`}>
+        <text fontSize={12}>{Math.floor(min(props.values))}€</text>
+      </g>
+    )
+
+    if (minVal !== 0 || maxVal !== 0) {
+      return (
+        <g>
+          {y1 ? upperVal : ''}
+          {y2 ? lowerVal : ''}
+        </g>
+      )
+    }
   }
 
   const renderDetails = () => {
-    if (highlighted.includes(getAttributeFromString(props.label))) {
+    if (highlighted.includes(getAttributeFromString(props.label)) && zoom[0] !== zoom[1] && (minVal !== 0 || maxVal !== 0)) {
       return (
         <g>
           {
             props.values.map((value, index) => {
-              return <text key={index} transform={`translate(${index === 0 ? 30 : xOffset * index},${index === 0 ? scale(value) : scale(value) + 12})`} fontSize={12} textAnchor='end'>{Math.floor(value)}</text>
+              const y = index === 0 ? scale(value) : scale(value) + 12
+
+              if (y < props.h && y > 0) {
+                return <text key={index} transform={`translate(${index === 0 ? 30 : xOffset * index},${y})`} fontSize={12} textAnchor='end'>{Math.floor(value)}</text>
+              }
             })
           }
         </g>

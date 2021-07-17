@@ -79,12 +79,17 @@ const StackedAreaGraph: React.FC<StackedAreaGraphProps> = (props) => {
   }
 
   const renderDetails = (type, isInc: boolean) => {
-    if (highlighted.includes(getAttributeFromString(type.key))) {
+    if (highlighted.includes(getAttributeFromString(type.key)) && zoom[0] !== zoom[1]) {
       return (
         <g>
           {
             type.map((data, index) => {
-              return <text key={index} transform={`translate(${xOffSet * index + 20},${isInc ? incomeY(data[1]) + 15 : expenditureY(data[1]) - 3})`} fontSize={12} textAnchor={index === type.length - 1 ? 'end' : 'start'}>{Math.floor(data[1])}</text>
+              const x = xOffSet * index + 20
+              const y = isInc ? incomeY(data[1]) + 15 : expenditureY(data[1]) - 3
+
+              if ((isInc && y < chartHeight / 2) || (!isInc && y > chartHeight / 2 + 20)) {
+                return <text key={index} transform={`translate(${x},${y})`} fontSize={12} textAnchor={index === type.length - 1 ? 'end' : 'start'}>{Math.floor(data[1])}</text>
+              }
             })
           }
         </g>

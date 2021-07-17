@@ -17,7 +17,7 @@ const BoxPlot: React.FC<BoxPlotPartials> = (props) => {
   const zoom = useSelector(getZoom)
 
   const spacingTop = 0
-  const spacingLeft = 20
+  const spacingLeft = 0
   const spacingRight = 220
   const spacingBottom = 40
 
@@ -65,6 +65,7 @@ const BoxPlot: React.FC<BoxPlotPartials> = (props) => {
             return (
               <g key={index} transform={'translate(0,' + index * segmentHeight + ')'}>
                 <BoxPlotPartial ticks={xTicks} label={key} w={chartWidth} h={chartHeight / Object.keys(props.groups[0]).filter(e => !unwantedKeys.includes(e)).length} values={props.groups.map(group => group[key])} min={minValue} max={maxValue} />
+                <rect x={chartWidth} y={0} width={spacingRight} height={segmentHeight} fill='white' />
                 <text style={{ fontSize: 11 }} transform={'translate(' + (chartWidth + 10) + ',30)'}>{key}</text>
               </g>
             )

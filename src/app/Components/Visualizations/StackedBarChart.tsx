@@ -27,7 +27,7 @@ const StackedBarChart: React.FC<StackedBarChartProps> = props => {
 
   const labels = props.groups.map(group => group.label)
 
-  const spacingLeft = 45
+  const spacingLeft = 50
   const spacingBottom = 50
   const chartWidth = (props.w - (2 * props.pad) - spacingLeft)
   const chartHeight = (props.h - (2 * props.pad) - spacingBottom)

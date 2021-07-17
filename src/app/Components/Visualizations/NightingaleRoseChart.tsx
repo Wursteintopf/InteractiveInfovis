@@ -64,9 +64,11 @@ const NightingaleRoseChart: React.FC<PieChartProps> = (props) => {
 
   const drawDetails = (key, value, angle) => {
     if (highlighted.includes(getAttributeFromString(key))) {
-      const [x, y] = convertAngleAndLengthToCoordinates(angle, scale(value) - 10)
+      const [x, y] = convertAngleAndLengthToCoordinates(angle, scale(value) > 30 ? scale(value) - 10 : 0)
 
-      return <text transform={`translate(${x},${y}) rotate(${angle})`} textAnchor='end' fontSize={12}>{Math.floor(value)}</text>
+      if (x !== 0 && y !== 0 && zoom[0] !== zoom[1]) {
+        return <text transform={`translate(${x},${y}) rotate(${angle})`} textAnchor='end' fontSize={12}>{Math.floor(value)}</text>
+      }
     }
   }
 
@@ -85,10 +87,13 @@ const NightingaleRoseChart: React.FC<PieChartProps> = (props) => {
                   const a2 = rotationScale(angle)
                   angle += inc.data['Erfasste Haushalte'] / 2
 
+                  const [x, y] = convertAngleAndLengthToCoordinates(a2, scale(inc[1]) > 0 ? scale(inc[1]) + 30 : 0)
+
                   return (
                     <g key={index2}>
                       <path d={arcPath(scale(inc[0]), scale(inc[1]), a1, a2)} fill={color(getAttributeFromString(type.key))} />
                       {drawDetails(type.key, inc[1], a1 + (a2 - a1) / 2)}
+                      {index === 2 && x !== 0 && y !== 0 && zoom[0] !== zoom[1] ? <text transform={'translate(' + x + ',' + y + ')'} textAnchor='middle' style={{ fontSize: 12 }}>{labels[index2].startsWith('5') ? labels[index2].substring(0, 10) : labels[index2]}</text> : ''}
                     </g>
                   )
                 })
@@ -110,14 +115,11 @@ const NightingaleRoseChart: React.FC<PieChartProps> = (props) => {
                   angle += inc.data['Erfasste Haushalte'] / 2
                   const a2 = rotationScale(angle)
 
-                  const [x, y] = convertAngleAndLengthToCoordinates(a1, scale(inc[1]) + 30)
-
                   return (
                     <g key={index2}>
                       <path d={arcPath(scale(inc[0]), scale(inc[1]), a1, a2)} fill={color(getAttributeFromString(type.key))} />
                       {drawDetails(type.key, inc[1], a1 + (a2 - a1) / 2)}
                       <path d={separator(path(), a2)} stroke='white' strokeWidth={5} />
-                      {index === 1 ? <text transform={'translate(' + x + ',' + y + ')'} textAnchor='middle' style={{ fontSize: 12 }}>{labels[index2].startsWith('5') ? labels[index2].substring(0, 10) : labels[index2]}</text> : ''}
                     </g>
                   )
                 })
