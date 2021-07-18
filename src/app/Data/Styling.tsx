@@ -50,7 +50,7 @@ export const LineChartArea = styled.div`
 
 export const StarPlotArea = styled.div`
   grid-column: 4 / 6;
-  grid-row: 5 / 9;
+  grid-row: 6 / 9;
 `
 
 export const BoxPlotArea = styled.div`
@@ -60,5 +60,5 @@ export const BoxPlotArea = styled.div`
 
 export const StackedBarChartArea = styled.div`
   grid-column: 4 / 6;
-  grid-row: 3 / 5;
+  grid-row: 3 / 6;
 `
