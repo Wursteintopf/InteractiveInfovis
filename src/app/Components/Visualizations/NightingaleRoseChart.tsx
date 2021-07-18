@@ -93,7 +93,7 @@ const NightingaleRoseChart: React.FC<PieChartProps> = (props) => {
                     <g key={index2}>
                       <path d={arcPath(scale(inc[0]), scale(inc[1]), a1, a2)} fill={color(getAttributeFromString(type.key))} />
                       {drawDetails(type.key, inc[1], a1 + (a2 - a1) / 2)}
-                      {index === 2 && x !== 0 && y !== 0 && zoom[0] !== zoom[1] ? <text transform={'translate(' + x + ',' + y + ')'} textAnchor='middle' style={{ fontSize: 12 }}>{labels[index2].startsWith('5') ? labels[index2].substring(0, 10) : labels[index2]}</text> : ''}
+                      {index === 2 && x !== 0 && y !== 0 && zoom[0] !== zoom[1] ? <text transform={'translate(' + x + ',' + y + ')'} textAnchor='middle' style={{ fontSize: 12 }}><tspan x='0' dy='0'>{labels[index2].startsWith('5') ? labels[index2].substring(0, 10) : labels[index2]}</tspan><tspan x='0' dy='1.2em'>({inc.data['Erfasste Haushalte']} households)</tspan></text> : ''}
                     </g>
                   )
                 })
