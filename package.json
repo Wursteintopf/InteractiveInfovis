@@ -4,9 +4,7 @@
   "description": "React Boilerplate",
   "scripts": {
     "dev": "parcel src/index.html",
-    "build": "parcel build src/index.html --out-dir build --public-url ./",
-    "api": "ts-node src/api/app.ts",
-    "update:packages": "node update.js && npm update --save-dev && npm update --save"
+    "build": "parcel build src/index.html --out-dir build --public-url ./"
   },
   "browserslist": [
     "Chrome > 75",

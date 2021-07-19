@@ -5,6 +5,7 @@ export const LegendBox = styled.div`
   position: absolute;
   top: 10px;
   left: 10px;
+  display: flex;
 `
 
 export const LegendRow = styled.div`
