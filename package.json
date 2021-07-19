@@ -16,11 +16,11 @@
     "url": "git+https://github.com/Wursteintopf/ReactBoilerplate.git"
   },
   "author": "Markus Vogel",
-  "license": "GPL-3.0-or-later",
+  "license": "THE BEER-WARE LICENSE (Revision 42)",
   "bugs": {
-    "url": "https://github.com/Wursteintopf/ReactBoilerplate/issues"
+    "url": "https://github.com/Wursteintopf/InteractiveInfovis/issues"
   },
-  "homepage": "https://github.com/Wursteintopf/ReactBoilerplate#readme",
+  "homepage": "https://github.com/Wursteintopf/InteractiveInfovis#readme",
   "dependencies": {
     "@emotion/core": "^11.0.0",
     "@emotion/styled": "^11.3.0",
